@@ -7,7 +7,7 @@ output:
   pdf_document: default
 ---
 
-## Create Ridgeline plot using `ggridges`
+## Ridgeline plots using `ggridges`
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
@@ -26,11 +26,9 @@ library(scales)
 library(tweenr)
 ```
 
-### Import NIH EXAMINER data
-
 ```{r}
 # NIH EXAMINER working memory data - fill sample
-wm <- data.table::fread("data/gwm_wm_ridgeplot_data.csv")
+wm <- data.table::fread("~/gwm.flow/data/gwm_wm_ridgeplot_data.csv")
 
 # tidy data
 wm <- wm %>% 
@@ -139,14 +137,12 @@ wm <- wm %>%
   set_names(names_fresh)
 
 # write out indiv tests
-readr::write_csv(wm, "wm.csv")
+#readr::write_csv(wm, "wm.csv")
 ```
-
-### WM factor
 
 ```{r wm}
 # NIH EXAMINER working memory data - fill sample
-wm <- data.table::fread("data/wm.csv")
+wm <- data.table::fread("~/gwm.flow/data/wm.csv")
 
 # wm phenos
 pheno <- data.frame(wm %>% select(
@@ -192,11 +188,14 @@ ggsave("cow.pdf", path = getwd(), device = "pdf", scale = 1, width = 11.69, heig
 
 ```
 
-### WM animation
+## WM animations using `gganimate`
 
-```{r, fig.show='animate', interval=1/10}
+```{r}
+# NIH EXAMINER working memory data - fill sample
+wm <- data.table::fread("~/gwm.flow/data/wm.csv")
+
 # gganimate code
-wm_plot <- ggplot2::ggplot(wm, na.rm = TRUE, aes(x = wm, y = as.factor(age_10y), fill = stat(x))) +
+anim <- ggplot2::ggplot(wm, na.rm = TRUE, aes(x = wm, y = as.factor(age_10y), fill = stat(x))) +
   geom_density_ridges_gradient(scale = 3, size = 0.3, rel_min_height = 0.01, gradient_lwd = 0.5) +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_discrete(expand = expansion(mult = c(0, 0))) +
@@ -209,18 +208,18 @@ wm_plot <- ggplot2::ggplot(wm, na.rm = TRUE, aes(x = wm, y = as.factor(age_10y),
     subtitle = "Trajectory of WM", 
     x = 'Working memory factor', 
     y = 'Age group') +
-  gganimate::transition_reveal(age_10y) +
-  #gganimate::transition_time(age_10y) +
+  gganimate::transition_time(age_10y) +
   gganimate::ease_aes('linear') +
   gganimate::enter_fade() +
   gganimate::exit_fade()
+animate(anim, fps = 20)
 ```
 
-# Correlation matrix
+## Correlation matrix
 
-#  {.tabset .tabset-fade .tabset-pills}
+##  {.tabset .tabset-fade .tabset-pills}
 
-## Code
+### Code
 
 ```{r chunk-1}
 mtcars %>% 
@@ -228,7 +227,7 @@ mtcars %>%
   round(2)
 ```
 
-## Output
+### Output
 
 ```{r chunk-2, echo=FALSE, ref.label='chunk-1'}
 ```
