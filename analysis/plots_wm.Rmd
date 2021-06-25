@@ -28,7 +28,7 @@ library(tweenr)
 
 ```{r}
 # NIH EXAMINER working memory data - fill sample
-wm <- data.table::fread("~/gwm.flow/data/gwm_wm_ridgeplot_data.csv")
+wm <- data.table::fread("data/gwm_wm_ridgeplot_data.csv")
 
 # tidy data
 wm <- wm %>% 
@@ -192,7 +192,7 @@ ggsave("cow.pdf", path = getwd(), device = "pdf", scale = 1, width = 11.69, heig
 
 ```{r}
 # NIH EXAMINER working memory data - fill sample
-wm <- data.table::fread("~/gwm.flow/data/wm.csv")
+wm <- data.table::fread("data/wm.csv")
 
 # gganimate code
 anim <- ggplot2::ggplot(wm, na.rm = TRUE, aes(x = wm, y = as.factor(age_10y), fill = stat(x))) +
@@ -212,7 +212,14 @@ anim <- ggplot2::ggplot(wm, na.rm = TRUE, aes(x = wm, y = as.factor(age_10y), fi
   gganimate::ease_aes('linear') +
   gganimate::enter_fade() +
   gganimate::exit_fade()
-animate(anim, fps = 20)
+```
+
+```{r}
+gganimate::animate(anim, fps = 20)
+```
+
+```{r, gganimate = list(nframes = 50, fps = 20)}
+gganimate::animate(anim)
 ```
 
 ## Correlation matrix
