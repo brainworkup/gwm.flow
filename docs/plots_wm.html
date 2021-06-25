@@ -370,7 +370,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -379,7 +379,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -391,7 +391,7 @@ div.tocify {
 <strong>Last updated:</strong> 2021-06-25
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>gwm.flow/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -467,28 +467,60 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongabsolute"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>File paths:</strong> absolute </a>
 </p>
 </div>
-<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div id="strongFilepathsstrongabsolute" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+<p>
+Using absolute paths to the files within your workflowr project makes it difficult for you and others to run your code on a different machine. Change the absolute path(s) below to the suggested relative path(s) to make your code more reproducible.
+</p>
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th style="text-align:left;">
+absolute
+</th>
+<th style="text-align:left;">
+relative
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+~/gwm.flow/data/gwm_wm_ridgeplot_data.csv
+</td>
+<td style="text-align:left;">
+data/gwm_wm_ridgeplot_data.csv
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+~/gwm.flow/data/wm.csv
+</td>
+<td style="text-align:left;">
+data/wm.csv
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcombrainworkupgwmflowtree56e5912ffed71d6e218b75ec847240aedac14f9atargetblank56e5912a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/brainworkup/gwm.flow/tree/56e5912ffed71d6e218b75ec847240aedac14f9a" target="_blank">56e5912</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcombrainworkupgwmflowtree5a8683548286f0eb78f6eb7baa6356f1b9c3ba98targetblank5a86835a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/brainworkup/gwm.flow/tree/5a8683548286f0eb78f6eb7baa6356f1b9c3ba98" target="_blank">5a86835</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcombrainworkupgwmflowtree56e5912ffed71d6e218b75ec847240aedac14f9atargetblank56e5912a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcombrainworkupgwmflowtree5a8683548286f0eb78f6eb7baa6356f1b9c3ba98targetblank5a86835a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/brainworkup/gwm.flow/tree/56e5912ffed71d6e218b75ec847240aedac14f9a" target="_blank">56e5912</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/brainworkup/gwm.flow/tree/5a8683548286f0eb78f6eb7baa6356f1b9c3ba98" target="_blank">5a86835</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -502,6 +534,22 @@ Ignored files:
     Ignored:    analysis/.DS_Store
     Ignored:    wm_ridgeline_plot.Rmd
     Ignored:    wm_ridgeline_plot_knit.Rmd
+
+Untracked files:
+    Untracked:  analysis/cow.pdf
+    Untracked:  analysis/dots.pdf
+    Untracked:  analysis/nback1.pdf
+    Untracked:  analysis/nback2.pdf
+    Untracked:  analysis/wm.csv
+    Untracked:  analysis/wm.pdf
+    Untracked:  figure/
+
+Unstaged changes:
+    Modified:   cow.pdf
+    Modified:   dots.pdf
+    Modified:   nback1.pdf
+    Modified:   nback2.pdf
+    Modified:   wm.pdf
 
 </code></pre>
 <p>
@@ -540,6 +588,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/brainworkup/gwm.flow/blob/5a8683548286f0eb78f6eb7baa6356f1b9c3ba98/analysis/plots_wm.Rmd" target="_blank">5a86835</a>
+</td>
+<td>
+brainworkup
+</td>
+<td>
+2021-06-25
+</td>
+<td>
+Updated plots
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/brainworkup/gwm.flow/e0ed7a3b8abf9fdedfa38d65d1011a4dc105cab2/docs/plots_wm.html" target="_blank">e0ed7a3</a>
+</td>
+<td>
+brainworkup
+</td>
+<td>
+2021-06-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -581,13 +663,8 @@ Publish the initial files for GWM
 </div>
 </div>
 </div>
-<div id="create-ridgeline-plot-using-ggridges" class="section level2">
-<h2>Create Ridgeline plot using <code>ggridges</code></h2>
-<div id="import-nih-examiner-data" class="section level3">
-<h3>Import NIH EXAMINER data</h3>
-</div>
-<div id="wm-factor" class="section level3">
-<h3>WM factor</h3>
+<div id="ridgeline-plots-using-ggridges" class="section level2">
+<h2>Ridgeline plots using <code>ggridges</code></h2>
 <p><img src="figure/plots_wm.Rmd/wm-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-wm-1">
@@ -627,17 +704,17 @@ brainworkup
 </div>
 </div>
 </div>
-<div id="wm-animation" class="section level3">
-<h3>WM animation</h3>
+<div id="wm-animations-using-gganimate" class="section level2">
+<h2>WM animations using <code>gganimate</code></h2>
+<p><img src="figure/plots_wm.Rmd/unnamed-chunk-3-1.gif" style="display: block; margin: auto;" /></p>
 </div>
+<div id="correlation-matrix" class="section level2">
+<h2>Correlation matrix</h2>
 </div>
-<div id="correlation-matrix" class="section level1">
-<h1>Correlation matrix</h1>
-</div>
-<div id="section" class="section level1 tabset tabset-fade tabset-pills">
-<h1 class="tabset tabset-fade tabset-pills"></h1>
-<div id="code" class="section level2">
-<h2>Code</h2>
+<div id="section" class="section level2 tabset tabset-fade tabset-pills">
+<h2 class="tabset tabset-fade tabset-pills"></h2>
+<div id="code" class="section level3">
+<h3>Code</h3>
 <pre><code>       mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 mpg   1.00 -0.85 -0.85 -0.78  0.68 -0.87  0.42  0.66  0.60  0.48 -0.55
 cyl  -0.85  1.00  0.90  0.83 -0.70  0.78 -0.59 -0.81 -0.52 -0.49  0.53
@@ -651,8 +728,8 @@ am    0.60 -0.52 -0.59 -0.24  0.71 -0.69 -0.23  0.17  1.00  0.79  0.06
 gear  0.48 -0.49 -0.56 -0.13  0.70 -0.58 -0.21  0.21  0.79  1.00  0.27
 carb -0.55  0.53  0.39  0.75 -0.09  0.43 -0.66 -0.57  0.06  0.27  1.00</code></pre>
 </div>
-<div id="output" class="section level2">
-<h2>Output</h2>
+<div id="output" class="section level3">
+<h3>Output</h3>
 <pre><code>       mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 mpg   1.00 -0.85 -0.85 -0.78  0.68 -0.87  0.42  0.66  0.60  0.48 -0.55
 cyl  -0.85  1.00  0.90  0.83 -0.70  0.78 -0.59 -0.81 -0.52 -0.49  0.53
