@@ -1,0 +1,8 @@
+data
+R
+.DS_Store
+wm_ridgeline_plot.Rmd
+wm_ridgeline_plot_knit.Rmd
+GWM.R
+.Rproj.user
+docs
