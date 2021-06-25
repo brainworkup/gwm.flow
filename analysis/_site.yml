@@ -9,6 +9,8 @@ navbar:
     href: about.html
   - text: License
     href: license.html
+  - text: Plots
+    href: plots_wm.html
   right:
   - icon: fa-github
     text: Source code
