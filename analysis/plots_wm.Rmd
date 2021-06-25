@@ -222,6 +222,10 @@ gganimate::animate(anim, fps = 20)
 gganimate::animate(anim)
 ```
 
+```{r}
+knitr::include_graphics("analysis/anim.gif")
+```
+
 ## Correlation matrix
 
 ##  {.tabset .tabset-fade .tabset-pills}
