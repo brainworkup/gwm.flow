@@ -16,7 +16,7 @@ knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tint'))
 options(htmltools.dir.version = FALSE)
 ```
 
-# B. ACCOMPLISHMENTS
+# B. Accomplishments
 
 # B.1 What are the major goals of the project?
 
@@ -28,8 +28,12 @@ information in conscious awareness just long enough to use it for problem
 solving. Limited working memory faculties are a fundamental aspect of the
 cognitive impairments prevalent in ADHD, schizophrenia, and many other CNS
 disorders. More than half of the variability in working memory capacity from
-person to person can be sourced back to inherited genetic factors. Because it is so highly heritable and diagnostically unbounded, the NIMH Research Domain
-Criteria (RDoC) initiative has prioritized working memory as a core paradigmatic construct to accelerate gene discovery research. Yet, to date, very few genome-wide significant findings have been reported for working memory, and none have been replicated.
+person to person can be sourced back to inherited genetic factors. Because it is
+so highly heritable and diagnostically unbounded, the NIMH Research Domain
+Criteria (RDoC) initiative has prioritized working memory as a core paradigmatic
+construct to accelerate gene discovery research. Yet, to date, very few
+genome-wide significant findings have been reported for working memory, and none
+have been replicated.
 
 As the discovery of loci reliably associated with working memory is key to
 understanding neuropathophysiology, our goal is to fast-track the identification
@@ -46,7 +50,8 @@ was formed to conduct large-scale GWAS of cognitive traits implicated in
 schizophrenia such as general cognitive ability, processing speed, working
 memory, and episodic memory. At present, we have individual-level GWAS data on
 24,000 participants who have 100,000 working memory data points collected for
-analysis. To our knowledge, this would be the largest and most well powered GWAS of working memory to date. The following interrelated specific aims are
+analysis. To our knowledge, this would be the largest and most well powered GWAS
+of working memory to date. The following interrelated specific aims are
 proposed:
 
 **Aim 1. Conduct a common factor GWAS of working memory.**
@@ -54,20 +59,26 @@ proposed:
 *Method.* Genomic structural equation modeling (Genomic SEM) will be used to
 ascertain the joint genetic architecture of narrow working memory facets to
 identify loci with effects on a genetically-derived general latent working
-memory factor ("*Gwm*"). *Hypothesis.* With sample sizes in the tens of thousands, the first replicable GWAS hits for working memory are expected to emerge.
+memory factor ("*Gwm*"). *Hypothesis.* With sample sizes in the tens of
+thousands, the first replicable GWAS hits for working memory are expected to
+emerge.
 
 **Aim 2. Determine the extent of shared genetic architecture.**
 
-*Method.* At genome-wide scale, linkage disequilibrium score regression (LDSC) and genomic restricted maximum likelihood (GREML) estimation will be used to
+*Method.* At genome-wide scale, linkage disequilibrium score regression (LDSC)
+and genomic restricted maximum likelihood (GREML) estimation will be used to
 determine the range of pleiotropy between working memory and correlated CNS
-phenotypes. *Hypothesis.* Widespread coheritability is expected to emerge, and Gwm will likely outperform narrower working memory domains and individual working memory subtests.
+phenotypes. *Hypothesis.* Widespread coheritability is expected to emerge, and
+Gwm will likely outperform narrower working memory domains and individual
+working memory subtests.
 
 **Aim 3: Isolate the strongest causal loci.**
 
 *Method.* At the molecular level, Mendelian randomization (MR) will be used to
 determine the direction of causality underlying pleiotropy between working
 memory and correlated CNS phenotypes. *Hypothesis.* *Gwm* hits are expected to
-exhibit strong causal effects from working memory to ADHD and schizophrenia, and moderate causal effects to other CNS phenotypes.
+exhibit strong causal effects from working memory to ADHD and schizophrenia, and
+moderate causal effects to other CNS phenotypes.
 
 **Aim 4. Map key causal biological mechanisms.**
 
@@ -79,7 +90,8 @@ causal CNS mechanisms.
 
 By deciphering the causal mechanisms through which allelic variation either
 perturbs or protects the working memory system, which in turn can disrupt or
-support the development and function of neural systems underlying working memory across the lifespan, we can leverage the data to enhance theoretical and
+support the development and function of neural systems underlying working memory
+across the lifespan, we can leverage the data to enhance theoretical and
 neurobiological models of working memory more solidly grounded in molecular
 genetics for a wide range of applications, which merits in-depth investigation.
 
@@ -89,8 +101,7 @@ genetics for a wide range of applications, which merits in-depth investigation.
 
 # B.2 What was accomplished under these goals?
 
-For this reporting period, describe:
-1.  Major activities
+For this reporting period, describe: 1. Major activities
 
 2.  Specific objectives
 
@@ -101,7 +112,10 @@ For this reporting period, describe:
 
 Include a discussion of stated goals not met. As the project progresses, the
 emphasis in reporting in this section should shift from reporting activities to
-reporting accomplishments. Goals are equivalent to specific aims. In the response, emphasize the significance of the findings to the scientific field. Include the approaches taken to ensure robust and unbiased results. For most NIH awards the response should not exceed 2 pages.
+reporting accomplishments. Goals are equivalent to specific aims. In the
+response, emphasize the significance of the findings to the scientific field.
+Include the approaches taken to ensure robust and unbiased results. For most NIH
+awards the response should not exceed 2 pages.
 
 -   Upload accomplishments [**Add Attachment**]
 
@@ -468,3 +482,4 @@ file.edit(
 # create a bib file for the R packages used in this document
 knitr::write_bib(c('base', 'rmarkdown'), file = 'skeleton.bib')
 ```
+

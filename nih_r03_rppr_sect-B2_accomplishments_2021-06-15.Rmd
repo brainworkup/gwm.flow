@@ -21,65 +21,17 @@ options(htmltools.dir.version = FALSE)
 
 # Significant results
 
-- including major findings, developments, or conclusions (both positive and negative)
+-   including major findings, developments, or conclusions (both positive and
+    negative)
 
 # Key outcomes or other achievements
 
-
 Include a discussion of stated goals not met. As the project progresses, the
 emphasis in reporting in this section should shift from reporting activities to
-reporting accomplishments. Goals are equivalent to specific aims. In the response, emphasize the significance of the findings to the scientific field. Include the approaches taken to ensure robust and unbiased results. For most NIH awards the response should not exceed 2 pages.
-
-
-## High-Performance Computing
-
-Computational research often requires resources that exceed those of a personal
-laptop or desktop computer. High-performance computing aggregates the resources
-from individual computers (known as nodes) into a cluster that works together to perform advanced, specialized computing jobs. The Center for Advanced Research
-Computing launched its new high-performance computing cluster, Discovery, in
-August 2020. The new cluster marks a significant upgrade to the CARC's
-cyberinfrastructure, and the first step in a major, user-focused overhaul of the
-program. The Discovery cluster consists of 2 shared login nodes and a total of
-around 11,000 CPU cores in around 500 compute nodes. The typical compute node
-has dual 8 to 16 core processors and resides on a 56 gigabit FDR InfiniBand
-backbone. Nearly 100 GB of storage space is provided for each user to store
-important code and configuration files in their home directories, and the
-BeeGFS/ZFS parallel project file system has a capacity of 8.4 PB of usable
-space, with a default storage quota of 10 TB per Principal Investigator across
-their projects. A rapidly growing fleet of state-of-the art multicore compute
-nodes is available for data-intensive research jobs, backed by two 800 TB,
-high-throughput scratch file systems. A low-latency, high-bandwidth InfiniBand
-network fabric facilitates intense research workloads on large data sets.
-Discovery includes an array of scientific software packages, both licensed and
-open source, for engineering, molecular simulation, and computational chemistry.
-Researchers can also install software packages or develop their own code within
-their project's allotted storage. Discovery is free to use for all USC faculty,
-research staff, and graduate students (with the approval of their faculty
-advisor). For information on how to set up your account and start using the
-cluster, see the Accounts page. If you anticipate working with legally
-restricted or sensitive data (e.g., HIPAA-, FERPA-, or CUI-regulated data), see
-the Secure Computing page. Researchers also have the option of participating in
-the Condo Cluster Program (CCP). The CCP allows researchers to reserve computing
-resources for dedicated use by their projects, giving them the flexibility of
-having their own cluster without the responsibility of purchasing hardware or
-performing maintenance. For more information on the CCP, see the Condo Cluster
-Program page.
-
-## The Penn Letter N-Back Test
-
-The Penn Letter N-Back Test measures working memory (WM), the ability to keep
-and refresh goal-related information. Participants attend to a continual series
-of letters that flash on the screen (one at a time) and press the spacebar
-according to three different rules (called the 0-back, 1-back, and 2-back).
-During the 0-back condition, the participant must simply respond to a currently
-present target ("X"). During the 1-back condition, he/she must press the
-spacebar when the letter on the screen is the same as the previous letter.
-During the 2-back condition, he/she must press the spacebar when the letter on
-the screen is the same as the letter before the previous letter (i.e. 2 letters
-back). In all trials, the inter-stimulus interval (ISI) is 2.5 seconds, and the
-stimuli (letters) themselves are presented for 0.5 seconds each. The participant
-practices all three principles before testing.
-
+reporting accomplishments. Goals are equivalent to specific aims. In the
+response, emphasize the significance of the findings to the scientific field.
+Include the approaches taken to ensure robust and unbiased results. For most NIH
+awards the response should not exceed 2 pages.
 
 ## Margin Figures
 
@@ -175,5 +127,3 @@ knitr::kable(
   mtcars[1:6, 1:6], caption = 'A subset of mtcars.'
 )
 ```
-
-
