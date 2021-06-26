@@ -1,6 +1,8 @@
 ---
 title: "Accomplishments"
 subtitle: "GWAS of the RDoC Cognitive Systems Domain: Modeling the Latent Genetic Architecture of Working Memory"
+author: "Joey Trampush PhD"
+date: June 15, 2021
 output: komadown::komatufte
 toc: false
 ---

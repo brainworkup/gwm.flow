@@ -1,0 +1,387 @@
+\documentclass[11pt,]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+    \setmainfont[]{Fira Sans}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=.5in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+\usepackage{longtable,booktabs}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+
+  \title{}
+    \author{}
+    \date{}
+  
+
+%%%%%%%%%%
+% personal preamble edits here
+%%%%%%%%%%
+\pagenumbering{gobble}
+
+% can toggle this for Helvetica
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+
+% \titlespacing*{\paragraph}{0pt}{2pt}{1em}
+
+% set section numbering/lettering
+% tips for seccntformat: https://tex.stackexchange.com/questions/95896/how-to-format-subsection-title-without-packages
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \expandafter\ifx\csname c@#1\endcsname\c@paragraph\else
+  \csname the#1\endcsname\quad
+  \fi\fi}
+  
+  % stucture for these commands: https://texfaq.org/FAQ-atsigns
+  \renewcommand\section{
+  \@startsection{section}{1}{\z@}
+    {-3.5ex \@plus -1ex \@minus -.2ex}
+    {1.0ex \@plus.2ex} %reduce space below section (was 1.5ex)
+    {\normalfont\normalsize\bf\uppercase}} %modify font style
+    
+  \renewcommand\subsection{
+  \@startsection{subsection}{2}{\z@}
+    {-1.5ex\@plus -1ex \@minus -.2ex}%reduce space above subsection (was -3.25ex)
+    {0.5ex \@plus .2ex}%reduce space below subsection (was 1.5ex)
+    {\normalfont\normalsize\bf}} %modify font style
+    
+  \renewcommand\subsubsection{
+  \@startsection{subsubsection}{3}{\z@}
+    {-1.0ex\@plus -1ex \@minus -.2ex}%reduce space above subsubsection (was -3.25ex)
+    {0.5ex \@plus .2ex}%reduce space below subsubsection (was 1.5ex)
+    {\normalfont\normalsize\bf}} %modify font style
+    
+  \renewcommand\paragraph{
+  \@startsection{paragraph}{4}{\z@}
+    {-0.5ex\@plus -1ex \@minus -.2ex}%reduce space above paragraph (was -3.25ex)
+    {-1.5ex \@plus .2ex}%convert space below paragraph to an indent (was 1.5ex)
+    {\normalfont\normalsize\bf}} %modify font style    
+\makeatother
+
+\renewcommand\thesubsection{\Alph{subsection}.}
+\renewcommand\thesubsubsection{\thesubsection\arabic{subsubsection}.}
+
+% reduce spacing at the top of lists
+\usepackage{enumitem}
+\setlist{topsep = 2pt}
+
+% allow text to wrap around figures
+\usepackage{graphicx}
+\usepackage{wrapfig}
+
+%%%%%%%%%%
+
+\begin{document}
+
+\hypertarget{nimh-grant-1-r03-mh123787-01}{%
+\paragraph*{\texorpdfstring{\textbf{NIMH Grant}: 1 R03
+MH123787-01}{NIMH Grant: 1 R03 MH123787-01}}\label{nimh-grant-1-r03-mh123787-01}}
+\addcontentsline{toc}{paragraph}{\textbf{NIMH Grant}: 1 R03 MH123787-01}
+
+\hypertarget{title-gwas-of-the-rdoc-cognitive-systems-domain-modeling-the-latent-genetic-architecture-of-working-memory}{%
+\paragraph*{\texorpdfstring{\textbf{Title}: GWAS of the RDoC Cognitive
+Systems Domain: Modeling the Latent Genetic Architecture of Working
+Memory}{Title: GWAS of the RDoC Cognitive Systems Domain: Modeling the Latent Genetic Architecture of Working Memory}}\label{title-gwas-of-the-rdoc-cognitive-systems-domain-modeling-the-latent-genetic-architecture-of-working-memory}}
+\addcontentsline{toc}{paragraph}{\textbf{Title}: GWAS of the RDoC
+Cognitive Systems Domain: Modeling the Latent Genetic Architecture of
+Working Memory}
+
+\hypertarget{pi-joey-trampush}{%
+\paragraph*{\texorpdfstring{\textbf{PI:} Joey
+Trampush}{PI: Joey Trampush}}\label{pi-joey-trampush}}
+\addcontentsline{toc}{paragraph}{\textbf{PI:} Joey Trampush}
+
+\hypertarget{project-period-06152020-06142022}{%
+\paragraph*{\texorpdfstring{\textbf{Project Period}: 06/15/2020 --
+06/14/2022}{Project Period: 06/15/2020 -- 06/14/2022}}\label{project-period-06152020-06142022}}
+\addcontentsline{toc}{paragraph}{\textbf{Project Period}: 06/15/2020 --
+06/14/2022}
+
+\hfill\break
+\hfill\break
+This grant was funded in response to NIMH PAR-17-158, ``Secondary Data
+Analyses to Explore NIMH Research Domain Criteria RDoC (R03).'' This
+report specifies activities from June 15, 2020 through June 14, 2021.
+
+\hypertarget{b.-accomplishments}{%
+\section{B. Accomplishments}\label{b.-accomplishments}}
+
+\hypertarget{b.1-what-are-the-major-goals-of-the-project}{%
+\subsection*{B.1 What are the major goals of the
+project?}\label{b.1-what-are-the-major-goals-of-the-project}}
+\addcontentsline{toc}{subsection}{B.1 What are the major goals of the
+project?}
+
+\textbf{Working memory} is the cognitive system responsible for the
+transient holding and processing of information in conscious awareness
+just long enough to use it for problem solving. Limited working memory
+faculties are a fundamental aspect of the cognitive impairments
+prevalent in ADHD, schizophrenia, and many other CNS disorders. More
+than half of the variability in working memory capacity from person to
+person can be sourced back to inherited genetic factors. Thus, our goal
+is to fast-track the identification and localization of molecular
+genetic signatures of working memory, and then to uncover the underlying
+causal molecular and biological mechanisms linking working memory
+deficits to genetically correlated disorders. GWAS (genome-wide
+association study) is a powerful approach to identify molecular
+signatures of complex traits if adequate sample sizes and proper
+statistical procedures are employed. We will utilize existing genomic
+and phenotypic data from the Cognitive Genomics Consortium (COGENT) to
+test novel hypotheses about the molecular genetic structure of working
+memory within the flexible RDoC framework. The study PI is an
+investigator and data analyst for COGENT, which was formed to conduct
+large-scale GWAS of cognitive traits implicated in schizophrenia such as
+general cognitive ability, processing speed, working memory, and
+episodic memory. At present, we have individual-level GWAS data on
+24,000 participants who have 100,000 working memory data points
+collected for analysis, which will be the largest and most well powered
+GWAS of working memory to date. The following interrelated specific aims
+are proposed:
+
+\textbf{Aim 1. Conduct a common factor GWAS of working memory}.
+
+\emph{Method}. Genomic structural equation modeling (Genomic SEM) will
+be used to ascertain the joint genetic architecture of narrow working
+memory facets to identify loci with effects on a genetically-derived
+general latent working memory factor (``\emph{Gwm}'').
+\emph{Hypothesis}. With sample sizes in the tens of thousands, the first
+replicable GWAS hits for working memory are expected to emerge.
+
+\textbf{Aim 2. Determine the extent of shared genetic architecture}.
+
+\emph{Method}. At genome-wide scale, linkage disequilibrium score
+regression (LDSC) and genomic restricted maximum likelihood (GREML)
+estimation will be used to determine the range of pleiotropy between
+working memory and correlated CNS phenotypes. \emph{Hypothesis}.
+Widespread coheritability is expected to emerge, and \emph{Gwm} will
+likely outperform narrower working memory domains and individual working
+memory subtests.
+
+\textbf{Aim 3: Isolate the strongest causal loci}.
+
+\emph{Method}. At the molecular level, Mendelian randomization (MR) will
+be used to determine the direction of causality underlying pleiotropy
+between working memory and correlated CNS phenotypes. \emph{Hypothesis}.
+\emph{Gwm} hits are expected to exhibit strong causal effects from
+working memory to ADHD and schizophrenia, and moderate causal effects to
+other CNS phenotypes.
+
+\textbf{Aim 4. Map key causal biological mechanisms}.
+
+\emph{Method}. To prioritize \emph{Gwm} loci for follow-up studies,
+functional mapping and annotation of genetic associations (FUMA) will be
+used to characterize the biological function of causal loci.
+\emph{Hypothesis}. Elucidating the biology of working memory is expected
+to be streamlined by narrowing the search space to causal CNS
+mechanisms.
+
+\hypertarget{b.1.a-have-the-major-goals-changed-since-the-initial-competing-award-or-previous-report}{%
+\subsubsection{B.1.a Have the major goals changed since the initial
+competing award or previous
+report?}\label{b.1.a-have-the-major-goals-changed-since-the-initial-competing-award-or-previous-report}}
+
+No
+
+\hypertarget{b.2-what-was-accomplished-under-these-goals}{%
+\subsection{B.2 What was accomplished under these
+goals?}\label{b.2-what-was-accomplished-under-these-goals}}
+
+\hypertarget{challenges}{%
+\subsubsection{Challenges}\label{challenges}}
+
+Year 1 was challenged by the pandemic and slowed our launch. We're
+catching up now, but had restricted access to our labs at USC for almost
+the entire year and limited access to people/colleagues/students. We
+rode it out and thankfully are back on track, and are looking forward to
+generating the results as promised in Year 2.
+
+Also back in August, the USC Center for Advanced Research Computing
+(CARC) launched a new high-performance computing cluster, Discovery,
+which is what we use to compute our large-scale genomic analyses. The
+new cluster now consists of around 11,000 CPU cores in around 500
+compute nodes; the typical compute node has dual 8 to 16 core processors
+and resides on a 56 gigabit FDR InfiniBand backbone; and nearly 100 GB
+of storage space is provided for each user, with a default storage quota
+of 10 TB per PI across our projects. However, as expected, the new
+cluster has had its share of ups and downs in terms of operating
+smoothly and wihtout interruption (e.g., it has been offline for
+maintenance for several weeks at a time here and there this year, just
+to work out some of the unforseeable bugs). There was also a bit of a
+learning curve to orient to the new user interfaces and job submission
+protocols. To support advanced computing at the university, USC recently
+upgraded the network capacity of individual research buildings to 100
+Gbps. The CARC has also deployed multiple 100 Gbps links between the ITS
+data center and the rest of the campus, creating an aggregate bandwidth
+of up to 400 Gbps. CARC will ultimately be an invaluable resource for
+computational researchers at USC, but the newness of it just added some
+additional wait time for current project.
+
+Finally, The Trans-Omics for Precision Medicine (TOPMed) programme seeks
+to elucidate the genetic architecture and biology of heart, lung, blood
+and sleep disorders, with the ultimate goal of improving diagnosis,
+treatment and prevention of these diseases. The initial phases of the
+programme focused on whole-genome sequencing of individuals with rich
+phenotypic data and diverse backgrounds. Here we describe the TOPMed
+goals and design as well as the available resources and early insights
+obtained from the sequence data. The resources include a variant
+browser, a genotype imputation server, and genomic and phenotypic data
+that are available through dbGaP (Database of Genotypes and
+Phenotypes)1. In the first 53,831 TOPMed samples, we detected more than
+400 million single-nucleotide and insertion or deletion variants after
+alignment with the reference genome. Additional previously undescribed
+variants were detected through assembly of unmapped reads and customized
+analysis in highly variable loci. Among the more than 400 million
+detected variants, 97\% have frequencies of less than 1\% and 46\% are
+singletons that are present in only one individual (53\% among unrelated
+individuals). These rare variants provide insights into mutational
+processes and recent human evolutionary history. The extensive catalogue
+of genetic variation in TOPMed studies provides unique opportunities for
+exploring the contributions of rare and noncoding sequence variants to
+phenotypic variation. Furthermore, combining TOPMed haplotypes with
+modern imputation methods improves the power and reach of genome-wide
+association studies to include variants down to a frequency of
+approximately 0.01\%.
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule
+Variable & TOPMed (v.R2) & HRC (v.r1.1) & 1000G Phase 3 (v.5) \\
+\midrule
+\endhead
+Haplotypes & 194,512 & 64,940 & 5,008 \\
+Samples & 97,256 & 32,470 & 2,504 \\
+Sites (chr1-22) & 308,107,085 & 39,635,008 & 49,143,605 \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{opportunities}{%
+\subsubsection{Opportunities}\label{opportunities}}
+
+\hypertarget{dockersingularity}{%
+\paragraph{Docker/Singularity}\label{dockersingularity}}
+
+\hypertarget{data-visualizationthe-penn-letter-n-back-test}{%
+\paragraph{Data visualization/The Penn Letter N-Back
+Test}\label{data-visualizationthe-penn-letter-n-back-test}}
+
+The Penn Letter N-Back Test measures working memory (WM), the ability to
+keep and refresh goal-related information. Participants attend to a
+continual series of letters that flash on the screen (one at a time) and
+press the spacebar according to three different rules (called the
+0-back, 1-back, and 2-back). During the 0-back condition, the
+participant must simply respond to a currently present target (``X'').
+During the 1-back condition, he/she must press the spacebar when the
+letter on the screen is the same as the previous letter. During the
+2-back condition, he/she must press the spacebar when the letter on the
+screen is the same as the letter before the previous letter (i.e.~2
+letters back). In all trials, the inter-stimulus interval (ISI) is 2.5
+seconds, and the stimuli (letters) themselves are presented for 0.5
+seconds each. The participant practices all three principles before
+testing.
+
+\hypertarget{b.3-competitive-revisionsadministrative-supplements}{%
+\subsection{B.3 Competitive Revisions/Administrative
+Supplements}\label{b.3-competitive-revisionsadministrative-supplements}}
+
+\hypertarget{for-this-reporting-period-is-there-one-or-more-revisionsupplement-associated-with-this-award-for-which-reporting-is-required}{%
+\subsubsection{For this reporting period, is there one or more
+Revision/Supplement associated with this award for which reporting is
+required?}\label{for-this-reporting-period-is-there-one-or-more-revisionsupplement-associated-with-this-award-for-which-reporting-is-required}}
+
+No
+
+\hypertarget{b.4-what-opportunities-for-training-and-professional-development-has-the-project-provided}{%
+\subsection{B.4 What opportunities for training and professional
+development has the project
+provided?}\label{b.4-what-opportunities-for-training-and-professional-development-has-the-project-provided}}
+
+Many many. Reproducible research. R. Rmarkdown. GitHub. Git.
+
+Support and Training User support for advanced computing at USC is
+primarily available through the CARC, which consists of a systems team,
+cloud/DevOps team, and research support team. The staff has expertise in
+storage system administration, software development, science and
+engineering applications, high-performance and parallel programming, and
+cloud computing solution development. The CARC also works with
+researchers who do not require HPC-level performance but need help
+developing or optimizing their code, improving their computing
+productivity by learning better programming languages, scripting, and so
+forth. The CARC offers regular onboarding sessions, office hours,
+introductory and advanced training workshops, and in-person and remote
+consultations. It also hosts vendor and national supercomputing center
+training at USC. As XSEDE Campus Champions, CARC staff can connect
+researchers with high-end computing needs to national supercomputing
+centers to scale their workflows and reach other researchers nationwide.
+
+\hypertarget{b.5-how-have-the-results-been-disseminated-to-communities-of-interest}{%
+\subsection{B.5 How have the results been disseminated to communities of
+interest?}\label{b.5-how-have-the-results-been-disseminated-to-communities-of-interest}}
+
+Neuropsychopharmacology
+
+\hypertarget{b.6-what-do-you-plan-to-do-during-the-next-reporting-period-to-accomplish-the-goals}{%
+\subsection{B.6 What do you plan to do during the next reporting period
+to accomplish the
+goals?}\label{b.6-what-do-you-plan-to-do-during-the-next-reporting-period-to-accomplish-the-goals}}
+
+\begin{wrapfigure}{R}{0.3\textwidth}
+
+\hfill{}\includegraphics[width=.3\textwidth]{rppr_trampush_nimh_grant_R03MH123787_files/figure-latex/unnamed-chunk-2-1} 
+
+\caption{Important scatterplot}\label{fig:unnamed-chunk-2}
+\end{wrapfigure}
+
+\hypertarget{timeline}{%
+\subsubsection{Timeline}\label{timeline}}
+
+There are lots of good examples of \texttt{R}-based Gantt charts to be
+found by clever Googling. For displaying progress with sidebar
+annotations by aim, I particularly like
+\href{https://datascienceplus.com/visualize-your-cvs-timeline-with-r-gantt-style/}{\underline{this}}
+example from the
+\href{https://github.com/laresbernardo/lares}{\underline{lares}}
+package.
+
+\bibliography{references.bib}
+
+
+\end{document}
