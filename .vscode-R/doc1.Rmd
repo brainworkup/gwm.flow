@@ -1,0 +1,11 @@
+---
+title:vscode - R.table
+---
+
+
+```{r}
+.vsc.viewer(rmarkdown::render("doc1.Rmd"))
+```
+
+
+

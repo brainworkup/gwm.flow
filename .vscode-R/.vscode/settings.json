@@ -1,0 +1,12 @@
+{
+  "foam.openDailyNote.directory": "",
+  "foam.openDailyNote.onStartup": false,
+  "r.rmarkdown.codeLensCommands": [
+    "r.runCurrentChunk",
+    "r.runAllChunks"
+  ],
+  "r.sessionWatcher": true,
+  "r.debugger.trackTerminals": true,
+  "r.lsp.debug": true,
+  "files.autoGuessEncoding": true
+}

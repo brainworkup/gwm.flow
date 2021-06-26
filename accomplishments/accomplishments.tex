@@ -1,0 +1,460 @@
+% !TEX encoding = UTF-8 Unicode
+% This template has been adapted from https://github.com/jgm/pandoc-templates
+% that comes attached with the following copyright notice. It also includes
+% segments from the R Markdown template that in turn is based on the pandoc
+% template.
+%
+% Copyright (c) 2014--2017, John MacFarlane
+%
+% All rights reserved.
+%
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions are met:
+%
+% * Redistributions of source code must retain the above copyright notice,
+%   this list of conditions and the following disclaimer.
+% * Redistributions in binary form must reproduce the above copyright notice,
+%   this list of conditions and the following disclaimer in the documentation
+%   and/or other materials provided with the distribution.
+% * Neither the name of John MacFarlane nor the names of other contributors may
+%   be used to endorse or promote products derived from this software without
+%   specific prior written permission.
+%
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+% POSSIBILITY OF SUCH DAMAGE.
+
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\PassOptionsToPackage{font=small,
+                      labelfont=bf,
+                      labelsep=period,
+                      justification=RaggedRight,
+                      format=plain,
+                      tableposition=top,
+                      singlelinecheck=off}{caption}
+
+\documentclass[%
+numbers=noendperiod,
+parskip=half,
+bibliography=totoc,
+,
+]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% !TEX program = latexmk
+% !TEX options = -synctex=1 -file-line-error -halt-on-error -pdf -outdir="%OUTDIR%" "%DOC%"
+%\usepackage{fontspec} % But only if can figure out how to use xelatex
+\usepackage{multicol}
+
+% Margin paragraph
+\usepackage{marginfix}
+%\usepackage{morefloats} % More than 18 floats
+
+\usepackage[font=footnotesize]{subcaption}
+\usepackage{booktabs}
+\usepackage[document]{ragged2e}
+\usepackage[shortlabels]{enumitem}
+\usepackage{etoolbox}
+\usepackage{floatrow}
+\usepackage{environ}
+\usepackage{xspace}
+
+\usepackage{iftex,ifxetex,ifluatex}
+
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+
+% Fonts
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm}
+\usepackage[lining,tabular]{libertine}
+\usepackage{textcomp}
+\usepackage[scaled=0.96,varqu,varl]{inconsolata}
+\usepackage{mathtools}
+\usepackage[libertine,libaltvw,liby,vvarbb]{newtxmath}
+\IfFileExists{mathalfa.sty}{\usepackage[scr=boondoxo]{mathalfa}}{}
+\IfFileExists{bm.sty}{\usepackage{bm}}{}
+\useosf
+
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\hypersetup{
+            pdftitle={Accomplishments},
+            colorlinks=true,
+            linkcolor=PineGreen,
+            filecolor=PineGreen,
+            citecolor=Periwinkle,
+            urlcolor=NavyBlue,
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+
+% Set tufte-like page layout
+\usepackage[
+        a4paper,
+  left=23mm,
+  top=27.4mm,
+  bottom=27.4mm,
+  textwidth=107mm,
+  marginparsep=8mm,
+  marginparwidth=49mm]{geometry}
+
+\usepackage{longtable,booktabs}
+% Fix footnotes in tables (requires footnote package)
+\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{longtable}}{}
+
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+
+
+% I copied this from Tufte template.tex on 3/6/21
+
+
+% Block margins for caption around figure and table environments
+\BeforeBeginEnvironment{figure}{\blockmargin}
+\AfterEndEnvironment{figure}{\unblockmargin}
+\BeforeBeginEnvironment{widefigure}{\blockmargin}
+\AfterEndEnvironment{widefigure}{\unblockmargin}
+\BeforeBeginEnvironment{table}{\blockmargin}
+\AfterEndEnvironment{table}{\unblockmargin}
+\BeforeBeginEnvironment{longtable}{\blockmargin}
+\AfterEndEnvironment{longtable}{\unblockmargin}
+\BeforeBeginEnvironment{widetable}{\blockmargin}
+\AfterEndEnvironment{widetable}{\unblockmargin}
+
+% Algorithms
+\IfFileExists{algpseudocode.sty}{%
+\usepackage[noend]{algpseudocode}
+\DeclareNewFloatType{algorithm}{fileext=alg, name=Algorithm}
+\floatsetup[algorithm]{margins=hangright,
+                       capposition=beside,
+                       capbesidesep=marginparsep,
+                       capbesideposition={top,right},
+                       floatwidth=\textwidth}%
+\BeforeBeginEnvironment{algorithm}{\blockmargin}
+\AfterEndEnvironment{algorithm}{\unblockmargin}
+}{}
+
+% Floats
+\DeclareNewFloatType{widefigure}{fileext=wfig, name=Figure}
+\DeclareFloatSeparators{marginparsep}{\hskip\marginparsep}
+\floatsetup[figure]{margins=hangright,
+                    capposition=beside,
+                    capbesidesep=marginparsep,
+                    capbesideposition={top,right},
+                    floatwidth=\textwidth}
+\floatsetup[table]{margins=hangright,
+                   capposition=beside,
+                   capbesidesep=marginparsep,
+                   capbesideposition={top,right},
+                   floatwidth=\textwidth}
+\floatsetup[longtable]{margins=hangright,
+                       capposition=beside,
+                       capbesidesep=marginparsep,
+                       capbesideposition={top,right},
+                       floatwidth=\textwidth}
+\floatsetup[widefigure]{margins=hangright,
+                        capposition=bottom}
+\floatsetup[widetable]{margins=hangright,
+                       capposition=top}
+\captionsetup[subfigure]{position=b,justification=RaggedRight}
+\captionsetup[sub]{justification=RaggedRight}
+
+% Provide marginfigure
+\NewEnviron{marginfigure}{%
+  \marginpar{%
+    \captionsetup{type=figure}
+    \BODY
+  }%
+}
+
+% Provide margintable
+\NewEnviron{margintable}{%
+  \marginpar{%
+    \captionsetup{type=table}
+    \BODY
+  }%
+}
+
+% Extended verbatim environments
+\usepackage{fancyvrb}
+\fvset{fontsize=\small}% default font size for fancy-verbatim environments
+
+% Provide fullwidth environment
+\newlength{\overhang}
+\setlength{\overhang}{\marginparwidth}
+\addtolength{\overhang}{\marginparsep}
+
+\newenvironment{fullwidth}{%
+  \blockmargin
+  \begin{addmargin*}[0em]{-\overhang}%
+}{%
+  \end{addmargin*}%
+  \unblockmargin
+}
+
+% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+\title{Accomplishments}
+
+\subtitle{GWAS of the RDoC Cognitive Systems Domain: Modeling the Latent Genetic Architecture of Working Memory}
+
+% Subfigs; uncommented this 6.1.21
+%\usepackage[margin=1em]{subfig}
+
+% Authors
+\usepackage[noblocks]{authblk}
+\renewcommand\Affilfont{\normalfont\itshape\small}
+\renewcommand\Authfont{}
+
+
+
+
+% Headers and footers
+\usepackage[headsepline=false,
+                        headwidth=textwithmarginpar,
+            footwidth=head]{scrlayer-scrpage}
+
+\pagestyle{scrheadings}
+
+
+\clearpairofpagestyles
+\rofoot[\pagemark]{\pagemark}
+\lohead{\headmark}
+
+
+
+% New, custom title
+\usepackage{titling}
+\setlength{\droptitle}{-5em}
+\pretitle{\begin{flushleft}\huge\bfseries\sffamily}
+\posttitle{
+    \\\smallskip\normalfont\itshape\large GWAS of the RDoC Cognitive Systems Domain: Modeling the Latent Genetic Architecture of Working Memory
+    \end{flushleft}
+}
+\preauthor{\begin{flushleft}\Large\scshape}
+\postauthor{\end{flushleft}\normalfont\vspace{-1em}} % Added this to reduce space June 2021
+\predate{}
+\postdate{}
+%\predate{\begin{flushleft}\normal\itshape} % changed
+%\postdate{\end{flushleft}} % changed 6/2021
+
+% Captions
+\usepackage[font=footnotesize]{subcaption}
+%\captionsetup[sub]{font = footnotesize}
+
+
+% Text justification and parskip
+\usepackage[document]{ragged2e}
+
+% Lists
+\usepackage[shortlabels]{enumitem}
+
+% Caption styles (caption package is loaded with sidenotes)
+\DeclareCaptionStyle{sidecaption}{labelfont=bf,labelsep=period,font=small}
+\DeclareCaptionStyle{marginfigure}{labelfont=bf,labelsep=period,font=small}
+\DeclareCaptionStyle{margintable}{labelfont=bf,labelsep=period,font=small,position=top}
+\DeclareCaptionStyle{widefigure}{labelfont=bf,labelsep=period,font=small}
+\DeclareCaptionStyle{widetable}{labelfont=bf,labelsep=period,font=small}
+
+% Redefine footnotes to be marginnotes
+\newcounter{snmark}
+\setcounter{snmark}{0}
+
+\newcommand*{\makesidenotemark}{\/\textsuperscript{\thesnmark}}
+
+\renewcommand{\footnote}[1]{%
+  \refstepcounter{snmark}%
+  \makesidenotemark{}%
+  \marginpar{\RaggedRight\small\textsuperscript{\thesnmark}\,#1}%
+}
+
+% Put thanks in marginpar
+\renewcommand{\thanks}[1]{%
+  \footnotemark%
+  \marginpar{\RaggedRight\small\textsuperscript{\thefootnotemark}\,#1}%
+}
+
+% Libertine in tabular
+\makeatletter
+\AtBeginDocument{\def\libertine@figurealign{}\libertineOsF}
+\makeatother
+\makeatletter
+\newcommand\libertineTabular{\def\libertine@figurealign{T}\libertineLF}
+\makeatother
+\usepackage{etoolbox}
+\AtBeginEnvironment{tabular}{\libertineTabular}
+\AtBeginEnvironment{longtable}{\libertineTabular}
+
+% KOMA font options
+
+
+% KOMA options
+
+
+\begin{document}
+\maketitle
+
+
+
+
+
+
+\hypertarget{major-activities}{%
+\section{Major activities}\label{major-activities}}
+
+Mostly data tidying and imputation.
+
+\hypertarget{specific-objectives}{%
+\section{Specific objectives}\label{specific-objectives}}
+
+The field moves fast; tech improves.
+
+\hypertarget{significant-results}{%
+\section{Significant results}\label{significant-results}}
+
+\begin{itemize}
+\tightlist
+\item
+  including major findings, developments, or conclusions (both positive and
+  negative)
+\end{itemize}
+
+\hypertarget{key-outcomes-or-other-achievements}{%
+\section{Key outcomes or other achievements}\label{key-outcomes-or-other-achievements}}
+
+Include a discussion of stated goals not met. As the project progresses, the
+emphasis in reporting in this section should shift from reporting activities to
+reporting accomplishments. Goals are equivalent to specific aims. In the
+response, emphasize the significance of the findings to the scientific field.
+Include the approaches taken to ensure robust and unbiased results. For most NIH
+awards the response should not exceed 2 pages.
+
+\hypertarget{high-performance-computing}{%
+\subsection{High-Performance Computing}\label{high-performance-computing}}
+
+Computational research often requires resources that exceed those of a personal
+laptop or desktop computer. High-performance computing aggregates the resources
+from individual computers (known as nodes) into a cluster that works together to
+perform advanced, specialized computing jobs. The Center for Advanced Research
+Computing launched its new high-performance computing cluster, Discovery, in
+August 2020. The new cluster marks a significant upgrade to the CARC's
+cyberinfrastructure, and the first step in a major, user-focused overhaul of the
+program. The Discovery cluster consists of 2 shared login nodes and a total of
+around 11,000 CPU cores in around 500 compute nodes. The typical compute node
+has dual 8 to 16 core processors and resides on a 56 gigabit FDR InfiniBand
+backbone. Nearly 100 GB of storage space is provided for each user to store
+important code and configuration files in their home directories, and the
+BeeGFS/ZFS parallel project file system has a capacity of 8.4 PB of usable
+space, with a default storage quota of 10 TB per Principal Investigator across
+their projects. A rapidly growing fleet of state-of-the art multicore compute
+nodes is available for data-intensive research jobs, backed by two 800 TB,
+high-throughput scratch file systems. A low-latency, high-bandwidth InfiniBand
+network fabric facilitates intense research workloads on large data sets.
+Discovery includes an array of scientific software packages, both licensed and
+open source, for engineering, molecular simulation, and computational chemistry.
+Researchers can also install software packages or develop their own code within
+their project's allotted storage. Discovery is free to use for all USC faculty,
+research staff, and graduate students (with the approval of their faculty
+advisor). For information on how to set up your account and start using the
+cluster, see the Accounts page. If you anticipate working with legally
+restricted or sensitive data (e.g., HIPAA-, FERPA-, or CUI-regulated data), see
+the Secure Computing page. Researchers also have the option of participating in
+the Condo Cluster Program (CCP). The CCP allows researchers to reserve computing
+resources for dedicated use by their projects, giving them the flexibility of
+having their own cluster without the responsibility of purchasing hardware or
+performing maintenance. For more information on the CCP, see the Condo Cluster
+Program page.
+
+\hypertarget{the-penn-letter-n-back-test}{%
+\subsection{The Penn Letter N-Back Test}\label{the-penn-letter-n-back-test}}
+
+The Penn Letter N-Back Test measures working memory (WM), the ability to keep
+and refresh goal-related information. Participants attend to a continual series
+of letters that flash on the screen (one at a time) and press the spacebar
+according to three different rules (called the 0-back, 1-back, and 2-back).
+During the 0-back condition, the participant must simply respond to a currently
+present target (``X''). During the 1-back condition, he/she must press the
+spacebar when the letter on the screen is the same as the previous letter.
+During the 2-back condition, he/she must press the spacebar when the letter on
+the screen is the same as the letter before the previous letter (i.e.~2 letters
+back). In all trials, the inter-stimulus interval (ISI) is 2.5 seconds, and the
+stimuli (letters) themselves are presented for 0.5 seconds each. The participant
+practices all three principles before testing.
+
+\end{document}
