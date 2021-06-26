@@ -1,0 +1,252 @@
+---
+title: "Accomplishments"
+subtitle: "GWAS of the RDoC Cognitive Systems Domain: Modeling the Latent Genetic Architecture of Working Memory"
+author:
+  - name: "PI: Joey Trampush PhD"
+date: January 1, 2021
+output:
+  komadown::komatufte:
+    latex_engine: pdflatex
+    citation_package: biblatex
+    number_sections: true
+    keep_md: true
+    keep_tex: false
+site: bookdown::bookdown_site
+toc: false
+highlight: yes
+bibliography: komadown.bib
+biblio-style: apa
+link-citations: yes
+colorlinks: yes
+graphics: yes
+fig-caption: true
+self-contained: yes
+fontpack-libertine: yes
+fontpack-newtx: yes
+automark: yes
+classoption:
+  - DIV=calc
+  - headsepline=true
+header:
+  - pos: ro
+    next: "GWAS of Working Memory"
+caption:
+  - labelfont=bf
+  - labelsep=period
+  - font=small
+setkomafont:
+  - element: descriptionlabel
+    commands: \normalfont\scshape\bfseries
+---
+
+```{r, setup, include = FALSE, results='hide', warning=FALSE}
+library(knitr)
+knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+knitr::knit_hooks$set(optipng = knitr::hook_optipng)
+
+# Fix subfigs for rmarkdown -> latex
+if (identical(knitr:::pandoc_to(), 'latex'))
+  knitr::knit_hooks$set(plot = knitr::hook_plot_tex)
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  dev = c("CairoPNG", "CairoPDF"),
+  dev.args = list(pointsize = 8),
+  crop = TRUE,
+  par = TRUE,
+  fig.width = 5,
+  fig.height = 3,
+  dpi = 300,
+  fig.pos = '!ht',
+  root.dir = normalizePath('./'),
+  cache = FALSE,
+  cache.path = './cache/report-',
+  # Code block options
+  eval = TRUE,
+  include = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  results = 'asis',
+  error = TRUE
+)
+
+knitr::opts_knit$set(width = 50)
+
+options(digits = 3, warnPartialMatchArgs = FALSE)
+```
+
+```{r}
+# Source functions
+source(file = here::here("R/utils.R"), local = knitr::knit_global())
+```
+
+```{r}
+# Source functions
+source(file = here::here("R/handout.R"), local = knitr::knit_global())
+```
+
+```{r}
+# Source functions
+source(file = here::here("R/html.R"), local = knitr::knit_global())
+```
+
+```{r}
+knitr::knit_engines$set(marginfigure = function(options) {
+        options$type = 'marginfigure'
+        eng_block = knitr::knit_engines$get('block')
+        eng_block(options)
+    })
+```
+
+(ref:zplot) *z* = -1 (16th percentile), *z* = 0 (50th percentile), and *z* = 1
+(84th percentile)
+
+(ref:pct) A percentile score shows a person's standing relative to peers. For
+example, a percentile score of 70 means Biggie performed as well as or better
+than 70% of individuals the same age.
+
+(ref:br) A base rate is the prevalence of score in the general population. If a
+score is rare, defined as a base rate of less than 10%, it is considered
+*clinically significant*, and that area of functioning is probably causing
+problems in daily functioning.
+
+(ref:vrb) *Verbal/language* refers to the ability to access and apply acquired
+word knowledge, to verbalize meaningful concepts, to understand complex
+multistep instructions, to think about verbal information, and to express
+oneself using words.
+
+(ref:spt) *Visuoperception, visuoconstruction, and visuospatial processing*
+refer to abilities such as mentally visualizing how objects should look from
+different angles, visualizing how to put objects together so that they fit
+correctly, and being able to accurately and efficiently copy and/or reproduce
+visual-spatial information onto paper.
+
+(ref:att-exe) *Attentional* and *executive functions* underlie most, if not all,
+domains of cognitive performance. These are behaviors and skills that allow
+individuals to successfully carry-out instrumental and social activities,
+academic work, engage with others effectively, problem solve, and successfully
+interact with the environment to get needs met.
+
+(ref:att) *Attention* is a basic function that underlies most, if not all,
+domains of neurocognitive functioning. If an individual has limited attentional
+capacity, an inability to sustain or divide attentional focus, or a reduced
+ability to selectively attend to competing stimuli, then they would likely be
+unable to interact with the environment to an adequate degree and, thus have
+limited functioning in other, higher-order areas.
+
+(ref:exe) Measures of *executive functioning* are used as proxies for behaviors
+and skills that allow individuals to successfully carry-out instrumental and
+social activities, such as planning, engaging with others effectively, problem
+solving, and successfully interacting with the environment to get needs met.
+
+(ref:wm) *Working memory* is the system responsible for the transient holding
+and processing of information in conscious awareness just long enough to use it
+for problem solving, and plays a critical role in reasoning, comprehension, and
+learning.
+
+(ref:ps) *Processing speed* refers to the rate at which the brain can
+repetitively process familiar and unfamiliar information during relatively easy
+tasks that almost everyone can do. Processing speed tests are good predictors of
+performance on tasks that are so well learned that they are nearly automatic,
+which can be critical to completing work efficiently.
+
+(ref:mem) *Learning and memory* refer to the rate and ease with which new
+information (e. g., facts, stories, lists, faces, names) can be encoded, stored,
+and later recalled from long-term memory.
+
+(ref:mtr) *Sensorimotor* tasks refer to the capacity to control hand movements
+quickly, smoothly, and with adequate precision, which are required to engage in
+activities such as writing and drawing.
+
+(ref:soccog) *Social cognition* measures are used to gauge aspects of
+social-emotional processing and social aptitude (sometimes referred to as
+emotional intelligence), which are important facets of how individuals process
+social information about other children, adults, groups, and social contexts.
+
+(ref:cc) *Cognitive control* guides behavior by controlling what, when, and how
+information is represented in the brain. Cognitive control is associated with a
+wide range of processes and is not restricted to a particular cognitive domain.
+Impairments in cognitive control functions are associated with specific deficits
+in attention, memory, language comprehension and emotional processing.
+
+(ref:adhd) *ADHD* is a neurodevelopmental disorder characterized by symptoms of
+inattention (not being able to keep focus), hyperactivity (excess movement that
+is not fitting to the setting) and impulsivity (hasty acts that occur in the
+moment without thought). Many ADHD symptoms, such as high activity levels,
+difficulty remaining still for long periods of time and limited attention spans,
+are common to children and adolescents in general, and even many adults. The
+difference in individuals with ADHD is that their hyperactivity and inattention
+are noticeably greater than expected for their age and cause distress and/or
+problems functioning at home, at school, at work, or with friends.
+
+# Major activities
+
+Mostly data tidying and imputation.
+
+# Specific objectives
+
+The field moves fast; tech improves.
+
+# Significant results
+
+-   including major findings, developments, or conclusions (both positive and
+    negative)
+
+# Key outcomes or other achievements
+
+Include a discussion of stated goals not met. As the project progresses, the
+emphasis in reporting in this section should shift from reporting activities to
+reporting accomplishments. Goals are equivalent to specific aims. In the
+response, emphasize the significance of the findings to the scientific field.
+Include the approaches taken to ensure robust and unbiased results. For most NIH
+awards the response should not exceed 2 pages.
+
+## High-Performance Computing
+
+Computational research often requires resources that exceed those of a personal
+laptop or desktop computer. High-performance computing aggregates the resources
+from individual computers (known as nodes) into a cluster that works together to
+perform advanced, specialized computing jobs. The Center for Advanced Research
+Computing launched its new high-performance computing cluster, Discovery, in
+August 2020. The new cluster marks a significant upgrade to the CARC's
+cyberinfrastructure, and the first step in a major, user-focused overhaul of the
+program. The Discovery cluster consists of 2 shared login nodes and a total of
+around 11,000 CPU cores in around 500 compute nodes. The typical compute node
+has dual 8 to 16 core processors and resides on a 56 gigabit FDR InfiniBand
+backbone. Nearly 100 GB of storage space is provided for each user to store
+important code and configuration files in their home directories, and the
+BeeGFS/ZFS parallel project file system has a capacity of 8.4 PB of usable
+space, with a default storage quota of 10 TB per Principal Investigator across
+their projects. A rapidly growing fleet of state-of-the art multicore compute
+nodes is available for data-intensive research jobs, backed by two 800 TB,
+high-throughput scratch file systems. A low-latency, high-bandwidth InfiniBand
+network fabric facilitates intense research workloads on large data sets.
+Discovery includes an array of scientific software packages, both licensed and
+open source, for engineering, molecular simulation, and computational chemistry.
+Researchers can also install software packages or develop their own code within
+their project's allotted storage. Discovery is free to use for all USC faculty,
+research staff, and graduate students (with the approval of their faculty
+advisor). For information on how to set up your account and start using the
+cluster, see the Accounts page. If you anticipate working with legally
+restricted or sensitive data (e.g., HIPAA-, FERPA-, or CUI-regulated data), see
+the Secure Computing page. Researchers also have the option of participating in
+the Condo Cluster Program (CCP). The CCP allows researchers to reserve computing
+resources for dedicated use by their projects, giving them the flexibility of
+having their own cluster without the responsibility of purchasing hardware or
+performing maintenance. For more information on the CCP, see the Condo Cluster
+Program page.
+
+## The Penn Letter N-Back Test
+
+The Penn Letter N-Back Test measures working memory (WM), the ability to keep
+and refresh goal-related information. Participants attend to a continual series
+of letters that flash on the screen (one at a time) and press the spacebar
+according to three different rules (called the 0-back, 1-back, and 2-back).
+During the 0-back condition, the participant must simply respond to a currently
+present target ("X"). During the 1-back condition, he/she must press the
+spacebar when the letter on the screen is the same as the previous letter.
+During the 2-back condition, he/she must press the spacebar when the letter on
+the screen is the same as the letter before the previous letter (i.e. 2 letters
+back). In all trials, the inter-stimulus interval (ISI) is 2.5 seconds, and the
+stimuli (letters) themselves are presented for 0.5 seconds each. The participant
+practices all three principles before testing.
