@@ -1,0 +1,337 @@
+---
+output:
+  bookdown::pdf_document2:
+    toc: no
+    template: template_nih.tex
+    keep_tex: yes
+    keep_md: yes
+    number_sections: no
+    latex_engine: xelatex
+    citation_package: natbib
+    fig_crop: yes
+    fig_caption: yes
+site: bookdown::bookdown_site
+geometry: margin=0.5in
+mainfont: Fira Sans
+fontsize: 11pt
+indent: false
+bibliography: gwm.bib
+link-citations: yes
+colorlinks: yes
+graphics: yes
+fig-caption: yes
+self-contained: yes
+highlight: yes
+linestretch: 1.24
+---
+
+```{r, setup, include = FALSE, results='hide', warning=FALSE}
+library(knitr)
+knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+knitr::knit_hooks$set(optipng = knitr::hook_optipng)
+
+# Fix subfigs for rmarkdown -> latex
+if (identical(knitr:::pandoc_to(), 'latex'))
+  knitr::knit_hooks$set(plot = knitr::hook_plot_tex)
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  dev = c("png", "pdf"),
+  dev.args = list(pointsize = 8),
+  crop = TRUE,
+  par = TRUE,
+  fig.width = 6.5,
+  fig.height = 5.5,
+  dpi = 300,
+  #fig.pos = '!H',
+  root.dir = normalizePath('./'),
+  cache = FALSE,
+  cache.path = './cache/report-',
+  # Code block options
+  eval = TRUE,
+  include = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  results = 'asis',
+  error = FALSE,
+  tidy = TRUE
+)
+
+options(digits = 3, warnPartialMatchArgs = FALSE)
+```
+
+## B.2 What was accomplished under these goals?
+
+Year 1 of the project was challenged by the COVID-19 pandemic and slowed our
+launch to a degree. We are catching up now, but we had restricted access to our
+labs at USC for almost the entire year and limited access to
+people/colleagues/students. We weathered it as best we could and thankfully are
+back on track, and are looking forward to completing our study aims in Year 2.
+
+### Reproducible research workflow
+
+The past few years have yielded much discussion and controversy in biomedical
+research circles surrounding reproducibility and replication of findings
+[@Krieger2019]. This is a well known problemm in psychiatric genetics. Thus,
+prior to engaging in the core data analyses for the study, I deliberately carved
+out time in my schedule for several months while working remotely to learn more
+about this issue and made a concerted effort to develop a consistent analytic
+workflow. I focused mostly on the open-source tools provided by the R
+statistical software package and specifcally learned how to work wiht and use
+the R-based "Tidyverse" ecosystem [ref], which is a set of tools that supports
+an efficient project management workflow for statisticians and data scientists
+who perform large-scale reproducible research within team science environments.
+The R Tidyverse is one of the leading software systems in the growing ecosystem
+of reproducibility-facilitating software for data science. I have designed my
+labs reinvented analtyical strategy for this project as well as all future
+projects to work in concert with RStudio, an interactive R integrated
+development environment [9], and R Markdown (.Rmd), a file structure
+accommodating text, code and code output [10]. Fully integrated with RStudio, R
+Markdown allows us to interleave statistical programming code with formatted
+annotations, enabling its users to write highly technical documents, perform
+cutting-edge statistical analyses with interaractive data visualzations, apply
+version control via Git and GitHub, publish our methods in publicaly available
+open-scienece frameworks and repositories, share our code, and generate
+easy-to-use websites were all of our methods can be easily shared and reviewed
+by any qualified and/or interested researcerh. We have a website for the current
+project at [gwm.flow](https://brainworkup.github.io/gwm.flow).
+
+For example, I generated these visualtions of working memory.
+
+```{r}
+## Create Ridgeline plot using `ggridges`
+# Load required R packages:
+library(here)
+library(tidyverse)
+library(data.table)
+library(purrr)
+library(ggridges) # ridgeline plots
+library(ggthemes) # wsj, tufte, 538, hc
+library(gganimate) # animate and create gifs
+library(scales)
+library(tweenr)
+library(animation)
+library(htmlwidgets)
+library(widgetframe)
+library(crosstalk)
+library(manipulateWidget)
+```
+
+```{r eval=TRUE}
+# NIH EXAMINER working memory data - fill sample
+#wm <- data.table::fread("data/wm.csv")
+wm <- data.table::fread("data/wm_10-80.csv")
+
+# wm phenos
+pheno <- data.frame(wm %>% select(
+  age_10y,
+  wm,
+  dots,
+  nback2,
+  nback1)
+  )
+
+dftmp <- as.data.frame(scale(pheno))
+names(dftmp) <- paste0("z", names(dftmp))
+pheno <-  bind_cols(pheno, dftmp)
+
+pheno <- data.frame(pheno %>% select(
+  age_10y,
+  zwm,
+  zdots,
+  znback2,
+  znback1)
+  )
+
+# Define function using .data[[]] pronoun
+
+plot_for_loop <- function(df, x_var, y_var) {
+
+  # plot code
+  plots <- ggplot(df, na.rm = TRUE, aes(x = .data[[x_var]], y = as.factor(.data[[y_var]]), fill = stat(x))) +
+    geom_density_ridges_gradient(scale = 3, size = 0.3, rel_min_height = 0.01, gradient_lwd = 0.5) +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_discrete(expand = expansion(mult = c(0, 0))) +
+    scale_fill_viridis_c(name = "score\nrange:", option = "A", direction = -1) +
+    labs(
+      title = x_var,
+      subtitle = "",
+      x = "z-score",
+      y = "age group") +
+    #theme_fivethirtyeight() +
+    #theme_wsj() +
+    theme(axis.title = element_text(size = 10))
+}
+
+# Loop through every column
+plot_list <- colnames(pheno)[-1] %>%
+  map( ~ plot_for_loop(pheno, .x, colnames(pheno)[1]))
+
+# save each file to the corresponding location on disk:
+paths <- stringr::str_c(names(pheno)[-1], ".pdf")
+pwalk(list(paths, plot_list), ggsave, path = getwd(), device = "pdf", scale = 1)
+
+# indiv plots
+p1 <- plot_list[[1]] +
+   ggtitle('WM factor')
+p2 <- plot_list[[2]] +
+  ggtitle('dot counting')
+p3 <- plot_list[[3]] +
+  ggtitle('nBack1')
+p4 <- plot_list[[4]] +
+  ggtitle('nBack2')
+```
+
+```{r}
+defOut <- knitr::knit_hooks$get("plot")  # save the default plot hook
+knitr::knit_hooks$set(plot = function(x, options) {  # set new plot hook ...
+  x <- defOut(x, options)  # first apply the default hook
+  if(!is.null(options$wrapfigure)) {  # then, if option wrapfigure is given ...
+    # create the new opening string for the wrapfigure environment ...
+    wf <- sprintf("\\begin{wrapfigure}{%s}{%g\\textwidth}", options$wrapfigure[[1]], options$wrapfigure[[2]])
+    x  <- gsub("\\begin{figure}", wf, x, fixed = T)  # and replace the default one with it.
+    x  <- gsub("{figure}", "{wrapfigure}", x, fixed = T)  # also replace the environment ending
+  }
+  return(x)
+})
+```
+
+```{r wm-plot, fig.cap = 'Complex working memory skills (e.g., performance on the dot-counting task and the 2-back trial of the N-back) rapidly improve during childhood/adolescence, peak between ages 20-40, and then decline back to early childhood levels in the later decades of life.', fig.width = 8, fig.height = 7, out.width = ".55\\textwidth", fig.align = "left", wrapfigure = list("L", .55)}
+
+library(patchwork)
+p1 /
+(p2 | p4 | p3)
+```
+
+Related, For the past two months, I have been training on the use of software
+containers and singularity. Singularity is an open-source application for
+creating and running software containers, designed primarily for
+high-performance computing on shared Linux-based computing clusters like CARC
+systems.Software containers are isolated, secure, stable, portable, and
+reproducible software environments rapidly being embraced by the research
+community in an effort to improve research reproducibility. Containers (e.g.,
+Docker, Singularity) packages main applications and all dependencies needed for
+an analysis, provide OS-level virtualization, and provide a custom user space
+that's portable and usable by others almost seamlessly. This ensures the same
+software stack is used among a research group, allows the same software stack
+across Linux systems (e.g., any HPC center), and one can run the same workflows
+across Linux systems by embedding runscripts in container images. A container
+image is a single executable file that defines the software environment for a
+container and also runs the container. A single container image can be used to
+run multiple instances of the same container simultaneously for different jobs.
+
+Singularity containers provide a custom user space and enable isolated, secure,
+stable, portable, and reproducible software environments on Linux systems. A
+Singularity container bundles a primary application and all of its dependencies
+into a single image file, which can also include data, scripts, and other files
+if desired. In addition, Singularity containers have direct access to the Linux
+kernel on the host system (e.g., Discovery or Endeavour compute nodes), so there
+is no substantial performance penalty when using a container compared to using
+natively installed software on the host system.
+
+### High-performance computing cluster
+
+In August of 2020, the USC Center for Advanced Research Computing (CARC)
+launched a new high-performance computing cluster, Discovery, which is what we
+use to compute our large-scale genomic analyses. The new cluster now consists of
+around 11,000 CPU cores in around 500 compute nodes; the typical compute node
+has dual 8 to 16 core processors and resides on a 56 gigabit FDR InfiniBand
+backbone; and nearly 100 GB of storage space is provided for each user, with a
+default storage quota of 10 TB per PI across our projects. However, as expected,
+the new cluster has had its share of ups and downs in terms of operating
+smoothly and wihtout interruption (e.g., it has been offline for maintenance for
+several weeks at a time here and there this year, just to work out some of the
+unforseeable bugs). There was also a bit of a learning curve to orient to the
+new user interfaces and job submission protocols. To support advanced computing
+at the university, USC recently upgraded the network capacity of individual
+research buildings to 100 Gbps. The CARC has also deployed multiple 100 Gbps
+links between the ITS data center and the rest of the campus, creating an
+aggregate bandwidth of up to 400 Gbps. CARC will ultimately be an invaluable
+resource for computational researchers at USC, but the newness of it just added
+some additional wait time for current project.
+
+### GWAS imputation
+
+Finally, the Trans-Omics for Precision Medicine (TOPMed) programme seeks to
+elucidate the genetic architecture and biology of heart, lung, blood and sleep
+disorders, with the ultimate goal of improving diagnosis, treatment and
+prevention of these diseases. The initial phases of the programme focused on
+whole-genome sequencing of individuals with rich phenotypic data and diverse
+backgrounds. Here we describe the TOPMed goals and design as well as the
+available resources and early insights obtained from the sequence data. The
+resources include a variant browser, a genotype imputation server, and genomic
+and phenotypic data that are available through dbGaP (Database of Genotypes and
+Phenotypes)1. In the first 53,831 TOPMed samples, we detected more than 400
+million single-nucleotide and insertion or deletion variants after alignment
+with the reference genome. Additional previously undescribed variants were
+detected through assembly of unmapped reads and customized analysis in highly
+variable loci. Among the more than 400 million detected variants, 97% have
+frequencies of less than 1% and 46% are singletons that are present in only one
+individual (53% among unrelated individuals). These rare variants provide
+insights into mutational processes and recent human evolutionary history. The
+extensive catalogue of genetic variation in TOPMed studies provides unique
+opportunities for exploring the contributions of rare and noncoding sequence
+variants to phenotypic variation. Furthermore, combining TOPMed haplotypes with
+modern imputation methods improves the power and reach of genome-wide
+association studies to include variants down to a frequency of approximately
+0.01%.
+
+|                     | **1000G Phase 3** |  **HRC**   | **TOPMed**  |
+|:--------------------|:-----------------:|:----------:|:-----------:|
+| **Haplotypes**      |       5,008       |   64,940   |   194,512   |
+| **Samples**         |       2,504       |   32,470   |   97,256    |
+| **Sites (chr1-22)** |    49,143,605     | 39,635,008 | 308,107,085 |
+
+## B.3 Competitive Revisions/Administrative Supplements
+
+For this reporting period, is there one or more Revision/Supplement associated
+with this award for which reporting is required?
+
+No
+
+## B.4 What opportunities for training and professional development has the project provided?
+
+Many many. Reproducible research. R. Rmarkdown. GitHub. Git.
+
+Support and Training User support for advanced computing at USC is primarily
+available through the CARC, which consists of a systems team, cloud/DevOps team,
+and research support team. The staff has expertise in storage system
+administration, software development, science and engineering applications,
+high-performance and parallel programming, and cloud computing solution
+development. The CARC also works with researchers who do not require HPC-level
+performance but need help developing or optimizing their code, improving their
+computing productivity by learning better programming languages, scripting, and
+so forth. The CARC offers regular onboarding sessions, office hours,
+introductory and advanced training workshops, and in-person and remote
+consultations. It also hosts vendor and national supercomputing center training
+at USC. As XSEDE Campus Champions, CARC staff can connect researchers with
+high-end computing needs to national supercomputing centers to scale their
+workflows and reach other researchers nationwide.
+
+## B.5 How have the results been disseminated to communities of interest?
+
+Neuropsychopharmacology
+
+## B.6 What do you plan to do during the next reporting period to accomplish the goals?
+
+# F SOMETHING
+
+## F.2 Actual or anticipated challenges or delays and actions or plans to resolve them
+
+We are not delayed in meeting any of the aims of the project; however, we have
+been impacted by the COVID-19 pandemic. The college students we planned to
+include in a beta-test of the intervention in the spring of 2020 were all
+off-campus and involved in distance learning. Thus, a beta-test of the pregaming
+intervention, which is focused on social drinking, was not possible during the
+spring with no students on campus. Students are returning to campus in August
+2020, and we will run the beta-test then, followed soon by the launch of the
+RCT. We expect drinking contexts to be different in the fall as students return
+to campus (e.g., fewer mass gatherings, unclear if football games will be played
+with spectators); however, given that some studies are indicating alcohol use
+may be increasing for many people during the pandemic, we believe fall 2020 will
+be a good time to launch. For students, this will represent the first time they
+are getting together with their college friends in months and we expect drinking
+to be heavy, and therefore, appropriate to target, in the intervention test.
+When reporting findings, we will place the intervention and its effects in
+context so that consumers of our study will understand that the intervention was
+studied during the COVID-19 pandemic.
