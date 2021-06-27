@@ -1,0 +1,333 @@
+---
+title: "GenomicSEM Analysis g ADHD"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#' Starting from GSM website
+##read in the schizophrenia summary statistics using fread from the data.table R package##
+library(tidyverse)
+library(GenomicSEM)
+require(here)
+```
+
+# Common Factor GWAS
+
+## Step 1: Munge the summary statistics
+
+```{r, eval=FALSE}
+# symlink GWAS summary stats
+ln -shfi ~/gwm.flow/data/genotypes/w_hm3.noMHC.snplist ~/gwm.flow/w_hm3.noMHC.snplist 
+ln -shfi ~/gwm.flow/data/genotypes/anx.sumstats.gz ~/gwm.flow/anx.sumstats.gz 
+
+## to zcat and see inside zipped files
+zcat < anx.sumstats.gz | wc -l
+zcat < anx.sumstats.gz | more 
+
+```
+
+```{r, eval=FALSE}
+# attach GWAS summary stats
+w_hm3.noMHC.snplist <- readr::read_tsv(here::here(
+   "genotypes", 
+   "w_hm3.noMHC.snplist"))
+
+anxiety <- 
+readr::read_tsv(
+   here::here(
+      "genotypes",
+      "gwas_sumstats",
+      "anxiety.meta.full.cc.tbl"))
+
+w_hm3.noMHC.snplist <- readr::read_tsv(here::here(
+   "gwas_sumstats"
+   "genotypes", 
+   "w_hm3.noMHC.snplist"))
+
+w_hm3.noMHC.snplist <- readr::read_tsv(here::here(
+   "gwas_sumstats"
+   "genotypes", 
+   "w_hm3.noMHC.snplist")) 
+
+ln -shfi ~/gwm.flow/data/genotypes/anx.sumstats.gz ~/gwm.flow/anx.sumstats.gz 
+
+## to zcat and see inside zipped files
+zcat < anx.sumstats.gz | wc -l
+zcat < anx.sumstats.gz | more 
+
+```
+
+```{r}
+# trying with symlinked files from /data/genotypes
+munge(c(
+   "daner_cogent_38.filtered.results", # cogent
+   "GWAS_CP_all.txt", # from ssgac
+   "daner_adhd_meta_filtered_NA_iPSYCH23_PGC11_sigPCs_woSEX_2ell6sd_EUR_Neff_70.meta.gz"
+      ), 
+   hm3 = "w_hm3.snplist",
+   trait.names=c(
+      "gcog_1",
+      "gcog_2",
+      "adhd"
+      ), 
+   c(
+     28445,
+     257828,
+     55274),
+   info.filter = 0.9,
+   maf.filter = 0.01)
+```
+
+## Step 2: Run multivariable LDSC
+
+```{r}
+traits <- c(
+    "cog.sumstats.gz", "adhd.sumstats.gz", "anx.sumstats.gz",
+    "mdd.sumstats.gz", "scz.sumstats.gz"
+)
+
+sample.prev <- c(NA, 0.37, 0.32, 0.35, 0.39)
+
+population.prev <- c(NA, 0.1, 0.29, 0.16, 0.01)
+
+
+ld <- "eur_w_ld_chr/"
+
+wld <- "eur_w_ld_chr/"
+
+
+trait.names <- c("COG", "ADHD", "ANX", "MDD", "SCZ")
+
+
+stand <- FALSE
+
+
+LDSCoutput <- GenomicSEM::ldsc(
+    traits = traits, sample.prev = sample.prev,
+    population.prev = population.prev, ld = ld,
+    wld = wld, trait.names = trait.names, stand = stand
+)
+
+```
+
+## Step 3: Prepare the summary statistics for GWAS
+
+The sumstats function takes care of a few things prior to running multivariate
+GWAS. In order to run a multivariate GWAS, the SNPs, and corresponding SNP
+effects, need to be coded across phenotypes so that the same allele is the
+reference allele in all cases. In all cases, coefficients and their SEs are then
+further transformed such that they are scaled relative to unit-variance scaled
+phenotypes. In order to appropriately perform this standardization for different
+types of betas (e.g., logistic betas, odds-ratios), the sumstats function takes
+a number of arguments outlined below. The sumstats function then combines these
+newly scaled betas and SEs into a single, listwise deleted file. Note that the
+OLS and LPM transformation require only a total sample size, p-value, and signed
+effect column (e.g., beta or Z-statistic), and do not require a SE column.
+Transformations for a case/control GWAS require both a SE column and either an
+odds ratio or logistic beta. Confused about how to specify the arguments for
+this function? See point 3 on the important resources and key information page.
+Please also note that the sumstats function requires that the variables be
+listed in the same order as they are listed for the ldsc function above. The
+sumstats function takes 4 necessary arguments, along with 6 additional arguments
+whose default is NULL:
+
+```{r}
+# GWAS
+files <- c(
+    "cogent_g_n38.txt", "adhd_pgc_2019.txt", "anxiety.txt",
+    "mdd_2018.txt", "scz_withRS.txt"
+)
+ref <- "reference.1000G.maf.0.005.txt"
+trait.names <- c("COG", "ADHD", "ANX", "MDD", "SCZ")
+se.logit <- c(F, F, F, F, F)
+OLS <- c(T, F, F, F, F)
+linprob <- NULL
+prop <- NULL
+N <- c(28445, 55274, 17310, 173005, 105318)
+info.filter <- 0.6
+maf.filter <- 0.01
+keep.indel <- FALSE
+parallel <- FALSE
+cores <- NULL
+
+p_sumstats <- GenomicSEM::sumstats(
+    files = files, ref = ref, trait.names = trait.names,
+    se.logit = se.logit, OLS = OLS, linprob = linprob, prop = prop,
+    N = N, info.filter = info.filter, maf.filter = maf.filter,
+    keep.indel = keep.indel, parallel = parallel, cores = cores
+)
+```
+
+## Step 4: Combine the summary statistics and LDSC output and run the common factor GWAS
+
+Note that as of 4/6/21, we combine the addSNPs and GWAS functions to save
+memory. The output from addSNPs can no longer be fed to the GWAS functions. In
+order to run multivariate GWAS, the S and V matrices from LDSC and the newly
+prepared summary statistics files first need to be merged to create as many S
+and V matrices as there are SNPs. The commonfactorGWAS function does this by
+expanding the S and V matrices to include the SNP effects. In addition, the
+function transforms the GWAS summary statistics (i.e., regression coefficients)
+and their SEs into covariances and SEs of covariances by taking the product of
+the regression coefficient and SNP variance from the reference file. Finally,
+the function will smooth S and V matrices that are non-positive definite when
+including the SNP covariances. After constructing the S and V matrices, the
+function will run the common factor model.
+
+Note that the commonfactorGWAS function use unit loading identification, such
+that the loading of the first indicator is fixed to 1 so that the model is
+identified. In order for the model to converge, it will typically be best to
+order your files in the ldsc and sumstats function such that the phenotype with
+the largest loading on the common factor is listed first. This can be determined
+by running commonfactor on just the ldsc matrix to determine what the factor
+structure looks like when not including the effect of an individual SNP. In this
+case, the phenotype with the largest loading on the common factor is
+schizophrenia. The commonfactorGWAS function has the following arguments:
+
+1.  covstruc: The output from LDSC.
+
+2.  SNPs: The output from sumstats.
+
+3.  estimation: Whether the models should be estimated using "DWLS" or "ML"
+    estimation. The package default is "DWLS".
+
+4.  cores: How many computer cores to use in parallel processing. The default is
+    to use 1 less core than is available in the local environment.
+
+5.  toler: What tolerance level to use for matrix inversions. This is only
+    something that needs to be of concern if warning/error messages are produced
+    to the effect of "matrix could not be inverted".
+
+6.  SNPSE: An optional argument specifying whether you want to set the SE of the
+    SNP to a value higher than the default of .0005. This number is set low to
+    reflect that this value is essentially be treating as fixed.
+
+7.  parallel: An optional argument specifying whether you want the function to
+    be run in parallel, or to be run serially. As most outputs from sumstats
+    will be quite long (i.e., \> 1 million SNPs), running the function in
+    parallel is highly recommended in order to save time; the default is for the
+    function to run in parallel unless you are using a Windows operating system.
+
+8.  GC: Level of Genomic Control (GC) you want the function to use. The default
+    is 'standard' which adjusts the univariate GWAS standard errors by
+    multiplying them by the square root of the univariate LDSC intercept.
+    Additional options include 'conserv', which adjusts standard errors by
+    multiplying with univariate LDSC intercept, and 'none' which does not
+    correct the standard errors.
+
+9.  MPI: Whether the function should use multi-node processing (i.e., MPI).
+    Please note that this should only be used on a computing cluster on which
+    the R package Rmpi is already installed.
+
+```{r}
+# commonfactor ------------------------------------------------------------
+covstruc <- LDSCoutput
+cf <- GenomicSEM::commonfactor(covstruc, estimation = "DWLS")
+```
+
+```{r}
+# run the multivariate GWAS using parallel processing
+covstruc <- LDSCoutput
+SNPs <- p_sumstats
+estimation <- "DWLS"
+cores <- NULL # change for CARC
+toler <- FALSE
+SNPSE <- FALSE
+parallel <- FALSE # change for CARC
+GC <- "standard"
+MPI <- FALSE
+# function
+pfactor <- commonfactorGWAS(
+    covstruc = covstruc, SNPs = SNPs, estimation = estimation,
+    cores = cores, toler = toler, SNPSE = SNPSE, parallel = parallel,
+    GC = GC, MPI = MPI
+)
+```
+
+```{r}
+# note that the code written above specifies all arguments for completeness, but as many of these arguments
+# are set to the package default it could also be written as below and produce the same result:
+pfactor <- commonfactorGWAS(covstruc = LDSCoutput, SNPs = p_sumstats)
+```
+
+The figure directly below depicts as a path diagram an example of the model run
+for SNP rs4552973: <!-- insert image -->
+
+The full set of summary statistics, along with a ReadMe file, can be found at:
+<https://utexas.box.com/s/vkd36n197m8klbaio3yzoxsee6sxo11v> The first 6 columns
+are pulled from the file created using sumstats and list the rsID, chromosome,
+BP, MAF from the reference file, A1, and A2. The "i" column is simply an ordered
+list of the runs. The "lhs", "op", and "rhs" column lists the outcome, operator,
+and predictor. In this case "F1 \~ SNP", indicates the common factor regressed
+on the SNP. The user should check that this column reads as such to confirm the
+appropriate results are being pulled. The "est" column lists the effect of the
+SNP on the common factor. The "se_c" column lists the sandwich corrected
+standard error associated with this effect. The "Z_Estimate" column lists the
+ratio of est/se_c. The "Pval_Estimate" column lists the corresponding p-value of
+Z_Estimate.
+
+The Q column lists the heterogeneity estimate for that SNP. This indexes the
+extent to which the SNP effect is not mediated by the common factor, with larger
+values indicating greater heterogeneity. This is a chi-square distributed test
+statistic, with degrees of freedom for a common factor model equal to the number
+of indicators - 1. The "Q_df" column lists the degrees of freedom for Q, and the
+"Q_pval" column lists the p-value associated with the Q statistic. The fail
+column indicates whether a particular run did not converge. The warning column
+will list whether a particular run raised any warnings in lavaan. This may
+include specific runs where the residual variance of an indicator is negative.
+
+Calculating sample size for factors Once the summary statistics for a common
+factor are produced, the user may wish to input those summary statistics into an
+outside program that requires a sample size (e.g., LDSC, LDpred). A description
+of one method for calculating effective sample size can be found in the online
+supplement of bioRxiv pre-print from Mallard et al. (2019):
+<https://www.biorxiv.org/content/10.1101/603134v1.abstract>. The equation
+described in the supplement can be written as below to produce the effective
+sample size for the p-factor. Note that the recommendation is also made to
+restrict the summary statistics to MAF limits of approximately 10% and 40% in
+order to produce more stable estimates.
+
+```{r}
+# restrict to MAF of 40% and 10%
+pfactor2 <- subset(pfactor, pfactor$MAF <= 0.4 & pfactor$MAF >= 0.1)
+
+# calculate effective N
+Effective_N <- (mean(
+    ((pfactor2$Z_Estimate/pfactor2$est)^2)/(2 * pfactor2$MAF * (1 -
+        pfactor2$MAF))
+))
+```
+
+We note also that for LDSC, the sample size provided does not effect the
+univariate intercept or the intercept SE. Although the heritability estimate and
+SE are contingent on user provided sample size, the ratio of the heritability
+estimate over SE is retained regardless of the sample size provided and,
+therefore, the heritability z-statistic can still be calculated.
+
+The commonfactorGWAS and commonfactorGWASpar functions use unit loading
+identification and genetic covariance matrices (and corresponding sampling
+covariance matrices) as input. That is, the SNP effects shown in the figure and
+table above are unstandardized with respect to both the outcome (the common
+factor) and the predictor (the SNP). As the common factor is a dependent
+variable, its variance is not directly represented, but rather implied. Thus,
+unit variance identification would require a model constraint. The latest
+version includes a user defined GWAS function in which the the user has
+substantial flexibility regarding what covariance structure and parameterization
+(such as specifying a model constraint) is specified. Output for a fully
+standardized version of a common factor GWAS is shown as an example below for
+rs4552973:
+
+A note on serial versus parallel processing. Serial and parallel processing will
+return the same output, but are computationally implemented in a serial and
+parallel fashion, respectively. In our experience using high performance
+computing systems there were often memory issues when using parallel processing
+unless you have access to large memory nodes. If memory issues are a problem
+then serial processing may be preferred. However, on a personal laptop with
+multiple cores, the computing time will be reduced greatly when using parallel
+processing. On a personal laptop with 8 cores using parallel processing for a
+common factor with five indicators and 1 million SNPs, the run time was
+approximately 8 hours. These functions are running as many models as there are
+SNPs.

@@ -7,9 +7,12 @@ output:
     keep_md: yes
     number_sections: no
     latex_engine: xelatex
-    citation_package: natbib
+    citation_package: biblatex
     fig_crop: yes
     fig_caption: yes
+    extra_dependencies: ["float"]
+    includes:
+      in_header: ["preamble.tex", "style.tex"]
 site: bookdown::bookdown_site
 geometry: margin=0.5in
 mainfont: Fira Sans
@@ -27,23 +30,21 @@ linestretch: 1.24
 
 ```{r, setup, include = FALSE, results='hide', warning=FALSE}
 library(knitr)
+
 knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
 knitr::knit_hooks$set(optipng = knitr::hook_optipng)
 
-# Fix subfigs for rmarkdown -> latex
-if (identical(knitr:::pandoc_to(), 'latex'))
-  knitr::knit_hooks$set(plot = knitr::hook_plot_tex)
-
 knitr::opts_chunk$set(
   echo = FALSE,
-  dev = c("png", "pdf"),
+  dev = c("CairoPNG", "CairoPDF"),
   dev.args = list(pointsize = 8),
   crop = TRUE,
   par = TRUE,
-  fig.width = 6.5,
-  fig.height = 5.5,
+  fig.width = 6,
+  fig.height = 5,
   dpi = 300,
-  #fig.pos = '!H',
+  #fig.pos = "!h",
+  #out.extra = "",
   root.dir = normalizePath('./'),
   cache = FALSE,
   cache.path = './cache/report-',
@@ -57,7 +58,25 @@ knitr::opts_chunk$set(
   tidy = TRUE
 )
 
+# # Fix subfigs for rmarkdown -> latex
+if (identical(knitr:::pandoc_to(), 'latex'))
+  knitr::knit_hooks$set(plot = knitr::hook_plot_tex)
+
 options(digits = 3, warnPartialMatchArgs = FALSE)
+```
+
+```{r}
+defOut <- knitr::knit_hooks$get("plot")  # save the default plot hook
+knitr::knit_hooks$set(plot = function(x, options) {  # set new plot hook ...
+  x <- defOut(x, options)  # first apply the default hook
+  if(!is.null(options$wrapfigure)) {  # then, if option wrapfigure is given ...
+    # create the new opening string for the wrapfigure environment ...
+    wf <- sprintf("\\begin{wrapfigure}{%s}{%g\\textwidth}", options$wrapfigure[[1]], options$wrapfigure[[2]])
+    x  <- gsub("\\begin{figure}", wf, x, fixed = T)  # and replace the default one with it.
+    x  <- gsub("{figure}", "{wrapfigure}", x, fixed = T)  # also replace the environment ending
+  }
+  return(x)
+})
 ```
 
 ## B.2 What was accomplished under these goals?
@@ -86,39 +105,31 @@ computing cluster is a welcomed resource we will utilize in Year 2 of the
 project for the core planned GWAS and bioinformatics analyses outlined in Aims
 1-4.
 
-We also decided to take advantage of the Trans-Omics for Precision Medicine
-(TOPMed) programme seeks to elucidate the genetic architecture and biology of
-heart, lung, blood and sleep disorders, with the ultimate goal of improving
-diagnosis, treatment and prevention of these diseases. The initial phases of the
-programme focused on whole-genome sequencing of individuals with rich phenotypic
-data and diverse backgrounds. Here we describe the TOPMed goals and design as
-well as the available resources and early insights obtained from the sequence
-data. The resources include a variant browser, a genotype imputation server, and
-genomic and phenotypic data that are available through dbGaP (Database of
-Genotypes and Phenotypes)1. In the first 53,831 TOPMed samples, we detected more
-than 400 million single-nucleotide and insertion or deletion variants after
-alignment with the reference genome. Additional previously undescribed variants
-were detected through assembly of unmapped reads and customized analysis in
-highly variable loci. Among the more than 400 million detected variants, 97%
-have frequencies of less than 1% and 46% are singletons that are present in only
-one individual (53% among unrelated individuals). These rare variants provide
-insights into mutational processes and recent human evolutionary history. The
-extensive catalogue of genetic variation in TOPMed studies provides unique
-opportunities for exploring the contributions of rare and noncoding sequence
-variants to phenotypic variation. Furthermore, combining TOPMed haplotypes with
-modern imputation methods improves the power and reach of genome-wide
-association studies to include variants down to a frequency of approximately
-0.01%.
+### Phenotyping
 
-|                     | **1000G Phase 3** |  **HRC**   | **TOPMed**  |
-|:--------------------|:-----------------:|:----------:|:-----------:|
-| **Haplotypes**      |       5,008       |   64,940   |   194,512   |
-| **Samples**         |       2,504       |   32,470   |   97,256    |
-| **Sites (chr1-22)** |    49,143,605     | 39,635,008 | 308,107,085 |
-
-## Phenotyping
-
-For example, I generated these visualtions of working memory.
+Because we could not run GWAS/GenomicSEM analyes per se while CARC performed the
+upgrade to the USC computing cluster for most of Year 1, we developed novel data
+analytic and visualization procedures of the working memory behavioral
+phenotypes to be used for GWAS. Behavioral phenotyping is much less
+computationally intensive and can be done on most standard desktop/laptop
+computers. Our approach was/is based on the [The Grammar of
+Graphics](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448/ref=as_li_ss_tl)
+and is implemented in `R` using the `ggplot2` system and related `R` data
+visualization packages within the broader
+[tidyverse](https://www.tidyverse.org/). The tidyverse is an opinionated
+collection of R packages designed for data science. All packages share an
+underlying design philosophy, grammar, and data structures, of which `ggplot2`
+is a package dedicated to data visualization that greatly improves the quality,
+efficiency, and aesthetics of graphics and plotting. For example, we employed
+the packages `ggridges` and `pathwork` to show the longitudinal/lifespan
+trajectory from age 3 to age 90+ of a few different working memory phenotypes.
+See **Figure** \@ref(fig:wm-plot) for an example. An animated version of the
+plot using `gganimate` can be viewed on the PIs personal website \@
+[brainworkup.fighton.io](https://brainworkup.org/post/2021-06-25-animated-plots/).
+Given the heterogeneity in age of our COGENT sample (ages 3 to 103) and the
+heterogeneity of our working memory phenotypes, it will be critical to use these
+and related types of analyses to better inform the interpretation of our genomic
+prediction and GWAS modeling.
 
 ```{r}
 ## Create Ridgeline plot using `ggridges`
@@ -153,10 +164,12 @@ pheno <- data.frame(wm %>% select(
   nback1)
   )
 
+# compute zscores
 dftmp <- as.data.frame(scale(pheno))
 names(dftmp) <- paste0("z", names(dftmp))
 pheno <-  bind_cols(pheno, dftmp)
 
+# wm zscores
 pheno <- data.frame(pheno %>% select(
   age_10y,
   zwm,
@@ -166,10 +179,9 @@ pheno <- data.frame(pheno %>% select(
   )
 
 # Define function using .data[[]] pronoun
-
 plot_for_loop <- function(df, x_var, y_var) {
 
-  # plot code
+    # plot code
   plots <- ggplot(df, na.rm = TRUE, aes(x = .data[[x_var]], y = as.factor(.data[[y_var]]), fill = stat(x))) +
     geom_density_ridges_gradient(scale = 3, size = 0.3, rel_min_height = 0.01, gradient_lwd = 0.5) +
     scale_x_continuous(expand = c(0, 0)) +
@@ -204,26 +216,44 @@ p4 <- plot_list[[4]] +
   ggtitle('nBack2')
 ```
 
-```{r}
-defOut <- knitr::knit_hooks$get("plot")  # save the default plot hook
-knitr::knit_hooks$set(plot = function(x, options) {  # set new plot hook ...
-  x <- defOut(x, options)  # first apply the default hook
-  if(!is.null(options$wrapfigure)) {  # then, if option wrapfigure is given ...
-    # create the new opening string for the wrapfigure environment ...
-    wf <- sprintf("\\begin{wrapfigure}{%s}{%g\\textwidth}", options$wrapfigure[[1]], options$wrapfigure[[2]])
-    x  <- gsub("\\begin{figure}", wf, x, fixed = T)  # and replace the default one with it.
-    x  <- gsub("{figure}", "{wrapfigure}", x, fixed = T)  # also replace the environment ending
-  }
-  return(x)
-})
-```
-
-```{r wm-plot, fig.cap = 'Complex working memory skills (e.g., performance on the dot-counting task and the 2-back trial of the N-back) rapidly improve during childhood/adolescence, peak between ages 20-40, and then decline back to early childhood levels in the later decades of life.', fig.width = 8, fig.height = 7, out.width = ".55\\textwidth", fig.align = "left", wrapfigure = list("L", .55)}
+```{r wm-plot, fig.cap = "Complex working memory skills (e.g., performance on the 2-back trial of the N-back task) rapidly improve during childhood/adolescence, peak in early adulthood, and then decline in the later decades of life. In contrast, basic working memory maintenance skill (e.g., 1-back performance) evidences minimal variation across the lifespan.", out.width = "0.40\\textwidth", fig.align = "center", wrapfigure = list("r", 0.50)}
 
 library(patchwork)
 p1 /
 (p2 | p4 | p3)
 ```
+
+### Genotyping
+
+We also decided to take advantage of the Trans-Omics for Precision Medicine
+(TOPMed) programme seeks to elucidate the genetic architecture and biology of
+heart, lung, blood and sleep disorders, with the ultimate goal of improving
+diagnosis, treatment and prevention of these diseases. The initial phases of the
+programme focused on whole-genome sequencing of individuals with rich phenotypic
+data and diverse backgrounds. Here we describe the TOPMed goals and design as
+well as the available resources and early insights obtained from the sequence
+data. The resources include a variant browser, a genotype imputation server, and
+genomic and phenotypic data that are available through dbGaP (Database of
+Genotypes and Phenotypes)1. In the first 53,831 TOPMed samples, we detected more
+than 400 million single-nucleotide and insertion or deletion variants after
+alignment with the reference genome. Additional previously undescribed variants
+were detected through assembly of unmapped reads and customized analysis in
+highly variable loci. Among the more than 400 million detected variants, 97%
+have frequencies of less than 1% and 46% are singletons that are present in only
+one individual (53% among unrelated individuals). These rare variants provide
+insights into mutational processes and recent human evolutionary history. The
+extensive catalogue of genetic variation in TOPMed studies provides unique
+opportunities for exploring the contributions of rare and noncoding sequence
+variants to phenotypic variation. Furthermore, combining TOPMed haplotypes with
+modern imputation methods improves the power and reach of genome-wide
+association studies to include variants down to a frequency of approximately
+0.01%.
+
+|                     | **1000G Phase 3** |  **HRC**   | **TOPMed**  |
+|:--------------------|:-----------------:|:----------:|:-----------:|
+| **Haplotypes**      |       5,008       |   64,940   |   194,512   |
+| **Samples**         |       2,504       |   32,470   |   97,256    |
+| **Sites (chr1-22)** |    49,143,605     | 39,635,008 | 308,107,085 |
 
 ## B.3 Competitive Revisions/Administrative Supplements
 
@@ -283,7 +313,7 @@ studied during the COVID-19 pandemic.
 
 The past few years have yielded much discussion and controversy in biomedical
 research circles surrounding reproducibility and replication of findings
-[@Krieger2019]. This is a well known problemm in psychiatric genetics. Thus,
+[Krieger2019]. This is a well known problemm in psychiatric genetics. Thus,
 prior to engaging in the core data analyses for the study, I deliberately carved
 out time in my schedule for several months while working remotely to learn more
 about this issue and made a concerted effort to develop a consistent analytic

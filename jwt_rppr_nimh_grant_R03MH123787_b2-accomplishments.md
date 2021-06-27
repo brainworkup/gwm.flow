@@ -7,9 +7,12 @@ output:
     keep_md: yes
     number_sections: no
     latex_engine: xelatex
-    citation_package: natbib
+    citation_package: biblatex
     fig_crop: yes
     fig_caption: yes
+    extra_dependencies: ["float"]
+    includes:
+      in_header: ["preamble.tex", "style.tex"]
 site: bookdown::bookdown_site
 geometry: margin=0.5in
 mainfont: Fira Sans
@@ -27,31 +30,73 @@ linestretch: 1.24
 
 
 
+
+
 ## B.2 What was accomplished under these goals?
 
-The first half of Year 1 (June-Dec 2020) was the startup phase of the study. We
+The first half of Year 1 (June-Dec 2020) was the start-up phase of the study. We
 had some challenges because of the COVID-19 pandemic, which restricted access to
-our labs at USC for the entire year and hence the ability to interact fluidly
-with people/colleagues/students. In addition, during the summer and the fall
+our labs at USC for the year and impinged upon our ability to interact fluidly
+with faculty/colleagues/students. In addition, during the summer and the fall
 2020 semester, the USC Center for Advanced Research Computing (CARC) launched a
 new high-performance computing cluster, Discovery. This is the computing system
 we use to conduct our large-scale genomic analyses. As such, we had to put a
 pause on data processing and conducting any new computationally intensive
 analyses. That said, the minor delay will ultimately pay dividends long-term, as
 the new cluster now consists of around 11,000 CPU cores in around 500 compute
-nodes; the typical compute node has dual 8 to 16 core processors and resides on
-a 56 gigabit FDR InfiniBand backbone; and nearly 100 GB of storage space is
-provided for each user, with a default storage quota of 10 TB per PI across our
-projects. USC recently upgraded the network capacity of individual research
-buildings to 100 Gbps as well, which further provides advanced computational
-research support to USC faculty and students campuswide. The new "supercomputer"
-has been running fairly smoothly for most of 2021, but given the newness of the
-system for both its administrators and us users, Discovery gets shut down
-regularly for scheduled maintenance, during which time clusters and file systems
-are unavailable for days at a time in some instances. Despite some of these
-unplanned wait times, the new Discovery high-performance computing cluster is a
-welcomed new resource we will fully utilize in Year 2 of the project for the
-core planned GWAS and bioinformatics analyses outlined in aims 1-4.
+nodes; the typical compute node has dual 8 to 16 core processors; and nearly 100
+GB of storage space is provided for each user, with a default storage quota of
+10 TB per PI across our individual projects. USC recently upgraded the network
+capacity of individual research buildings to 100 Gbps as well, which further
+provides advanced computational research support to USC faculty and students
+campus wide. The new "supercomputer" has been running fairly smoothly for most
+of 2021, but given the newness of the system for both its administrators and us
+users, Discovery gets shut down regularly for scheduled maintenance, during
+which time clusters and file systems are unavailable for extended periods.
+Despite some of these unplanned wait times, the new Discovery high-performance
+computing cluster is a welcomed resource we will utilize in Year 2 of the
+project for the core planned GWAS and bioinformatics analyses outlined in Aims
+1-4.
+
+### Phenotyping
+
+Because we could not run GWAS/GenomicSEM analyes per se while CARC performed the
+upgrade to the USC computing cluster for most of Year 1, we developed novel data
+analytic and visualization procedures of the working memory behavioral
+phenotypes to be used for GWAS. Behavioral phenotyping is much less
+computationally intensive and can be done on most standard desktop/laptop
+computers. Our approach was/is based on the [The Grammar of
+Graphics](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448/ref=as_li_ss_tl)
+and is implemented in `R` using the `ggplot2` system and related `R` data
+visualization packages within the broader `R`
+[tidyverse](https://www.tidyverse.org/). `ggplot2` is an `R` package dedicated
+to data visualization that greatly improves the quality, efficiency, and
+aesthetics of graphics and data visualizations. For example, we employed
+the`tidyverse` packages `ggridges` and `pathwork` to show the
+longitudinal/lifespan trajectory from age 3 to age 90+ of a few different
+working memory phenotypes. See **Figure** \@ref(fig:wm-plot) for an example. An
+animated version of the plot using `gganimate` can be viewed on the PIs personal
+website \@
+[brainworkup.fighton.io](https://brainworkup.org/post/2021-06-25-animated-plots/).
+Given the heterogeneity in age of our COGENT sample (ages 3 to 103) and the
+heterogeneity of our working memory phenotypes, it will be critical to use these
+and related types of analyses to better inform the interpretation of our genomic
+prediction and GWAS modeling.
+
+
+
+
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+
+{\centering \includegraphics[width=0.40\textwidth]{jwt_rppr_nimh_grant_R03MH123787_b2-accomplishments_files/figure-latex/wm-plot-1} 
+
+}
+
+\caption[Complex working memory skills (e.g., performance on the 2-back trial of the N-back task) rapidly improve during childhood/adolescence, peak in early adulthood, and then decline in the later decades of life]{Complex working memory skills (e.g., performance on the 2-back trial of the N-back task) rapidly improve during childhood/adolescence, peak in early adulthood, and then decline in the later decades of life. In contrast, basic working memory maintenance skill (e.g., 1-back performance) evidences minimal variation across the lifespan.}(\#fig:wm-plot)
+\end{wrapfigure}
+
+### Genotyping
 
 We also decided to take advantage of the Trans-Omics for Precision Medicine
 (TOPMed) programme seeks to elucidate the genetic architecture and biology of
@@ -82,23 +127,6 @@ association studies to include variants down to a frequency of approximately
 | **Haplotypes**      |       5,008       |   64,940   |   194,512   |
 | **Samples**         |       2,504       |   32,470   |   97,256    |
 | **Sites (chr1-22)** |    49,143,605     | 39,635,008 | 308,107,085 |
-
-## Phenotyping
-
-For example, I generated these visualtions of working memory.
-
-
-
-
-
-
-
-\begin{wrapfigure}{L}{0.55\textwidth}
-
-\includegraphics[width=.55\textwidth]{jwt_rppr_nimh_grant_R03MH123787_b2-accomplishments_files/figure-latex/wm-plot-1} \hfill{}
-
-\caption[Complex working memory skills (e.g., performance on the dot-counting task and the 2-back trial of the N-back) rapidly improve during childhood/adolescence, peak between ages 20-40, and then decline back to early childhood levels in the later decades of life]{Complex working memory skills (e.g., performance on the dot-counting task and the 2-back trial of the N-back) rapidly improve during childhood/adolescence, peak between ages 20-40, and then decline back to early childhood levels in the later decades of life.}(\#fig:wm-plot)
-\end{wrapfigure}
 
 ## B.3 Competitive Revisions/Administrative Supplements
 
@@ -158,7 +186,7 @@ studied during the COVID-19 pandemic.
 
 The past few years have yielded much discussion and controversy in biomedical
 research circles surrounding reproducibility and replication of findings
-[@Krieger2019]. This is a well known problemm in psychiatric genetics. Thus,
+[Krieger2019]. This is a well known problemm in psychiatric genetics. Thus,
 prior to engaging in the core data analyses for the study, I deliberately carved
 out time in my schedule for several months while working remotely to learn more
 about this issue and made a concerted effort to develop a consistent analytic
@@ -207,4 +235,3 @@ if desired. In addition, Singularity containers have direct access to the Linux
 kernel on the host system (e.g., Discovery or Endeavour compute nodes), so there
 is no substantial performance penalty when using a container compared to using
 natively installed software on the host system.
-
