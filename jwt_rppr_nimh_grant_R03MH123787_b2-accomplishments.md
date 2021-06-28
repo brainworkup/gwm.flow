@@ -10,7 +10,7 @@ output:
     citation_package: biblatex
     fig_crop: yes
     fig_caption: yes
-    extra_dependencies: ["float"]
+    #extra_dependencies: ["float"]
     includes:
       in_header: ["preamble.tex", "style.tex"]
 site: bookdown::bookdown_site
@@ -26,6 +26,8 @@ fig-caption: yes
 self-contained: yes
 highlight: yes
 linestretch: 1.24
+papersize: a4
+links-as-notes: false
 ---
 
 
@@ -60,34 +62,29 @@ project for the core planned GWAS and bioinformatics analyses outlined in Aims
 
 ### Phenotyping
 
-Because we could not run GWAS/GenomicSEM analyes per se while CARC performed the
-upgrade to the USC computing cluster for most of Year 1, we developed novel data
-analytic and visualization procedures of the working memory behavioral
+Because we could not run GWAS/GenomicSEM analyses per se while CARC performed
+the upgrade to the USC computing cluster for most of Year 1, we developed novel
+data analytic and visualization procedures of the working memory behavioral
 phenotypes to be used for GWAS. Behavioral phenotyping is much less
 computationally intensive and can be done on most standard desktop/laptop
 computers. Our approach was/is based on the [The Grammar of
 Graphics](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448/ref=as_li_ss_tl)
 and is implemented in `R` using the `ggplot2` system and related `R` data
-visualization packages within the broader `R`
-[tidyverse](https://www.tidyverse.org/). `ggplot2` is an `R` package dedicated
-to data visualization that greatly improves the quality, efficiency, and
-aesthetics of graphics and data visualizations. For example, we employed
-the`tidyverse` packages `ggridges` and `pathwork` to show the
-longitudinal/lifespan trajectory from age 3 to age 90+ of a few different
-working memory phenotypes. See **Figure** \@ref(fig:wm-plot) for an example. An
-animated version of the plot using `gganimate` can be viewed on the PIs personal
-website \@
-[brainworkup.fighton.io](https://brainworkup.org/post/2021-06-25-animated-plots/).
-Given the heterogeneity in age of our COGENT sample (ages 3 to 103) and the
-heterogeneity of our working memory phenotypes, it will be critical to use these
-and related types of analyses to better inform the interpretation of our genomic
-prediction and GWAS modeling.
+visualization packages within the broader
+[tidyverse](https://www.tidyverse.org/). The `tidyverse` is an opinionated
+collection of R packages designed for data science. All packages share an
+underlying design philosophy, grammar, and data structures, of which `ggplot2`
+is a package dedicated to data visualization that greatly improves the quality,
+efficiency, and aesthetics of graphics and plotting. For example, we employed
+the packages `ggridges` and `pathwork` to show the longitudinal/lifespan
+trajectory from age 3 to age 90+ of a few different working memory phenotypes.
+See **Figure** \@ref(fig:wm-plot) for an example.
 
 
 
 
 
-\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{wrapfigure}{l}{0.5\textwidth}
 
 {\centering \includegraphics[width=0.40\textwidth]{jwt_rppr_nimh_grant_R03MH123787_b2-accomplishments_files/figure-latex/wm-plot-1} 
 
@@ -96,142 +93,157 @@ prediction and GWAS modeling.
 \caption[Complex working memory skills (e.g., performance on the 2-back trial of the N-back task) rapidly improve during childhood/adolescence, peak in early adulthood, and then decline in the later decades of life]{Complex working memory skills (e.g., performance on the 2-back trial of the N-back task) rapidly improve during childhood/adolescence, peak in early adulthood, and then decline in the later decades of life. In contrast, basic working memory maintenance skill (e.g., 1-back performance) evidences minimal variation across the lifespan.}(\#fig:wm-plot)
 \end{wrapfigure}
 
+An animated version of the plot showing mean change scores in working memory
+over time using `gganimate` can be viewed on the PIs personal website \@
+[brainworkup.fighton.io](https://brainworkup.org/post/2021-06-25-animated-plots/).
+Given the heterogeneity in age of our COGENT sample (ages 3 to 103) and the
+heterogeneity of our working memory phenotypes, it will be critical to use these
+and related types of analyses to better inform the interpretation of our genomic
+prediction and GWAS modeling.
+
 ### Genotyping
 
-We also decided to take advantage of the Trans-Omics for Precision Medicine
-(TOPMed) programme seeks to elucidate the genetic architecture and biology of
-heart, lung, blood and sleep disorders, with the ultimate goal of improving
-diagnosis, treatment and prevention of these diseases. The initial phases of the
-programme focused on whole-genome sequencing of individuals with rich phenotypic
-data and diverse backgrounds. Here we describe the TOPMed goals and design as
-well as the available resources and early insights obtained from the sequence
-data. The resources include a variant browser, a genotype imputation server, and
-genomic and phenotypic data that are available through dbGaP (Database of
-Genotypes and Phenotypes)1. In the first 53,831 TOPMed samples, we detected more
-than 400 million single-nucleotide and insertion or deletion variants after
-alignment with the reference genome. Additional previously undescribed variants
-were detected through assembly of unmapped reads and customized analysis in
-highly variable loci. Among the more than 400 million detected variants, 97%
-have frequencies of less than 1% and 46% are singletons that are present in only
-one individual (53% among unrelated individuals). These rare variants provide
-insights into mutational processes and recent human evolutionary history. The
-extensive catalogue of genetic variation in TOPMed studies provides unique
-opportunities for exploring the contributions of rare and noncoding sequence
-variants to phenotypic variation. Furthermore, combining TOPMed haplotypes with
-modern imputation methods improves the power and reach of genome-wide
-association studies to include variants down to a frequency of approximately
-0.01%.
 
-|                     | **1000G Phase 3** |  **HRC**   | **TOPMed**  |
-|:--------------------|:-----------------:|:----------:|:-----------:|
-| **Haplotypes**      |       5,008       |   64,940   |   194,512   |
-| **Samples**         |       2,504       |   32,470   |   97,256    |
-| **Sites (chr1-22)** |    49,143,605     | 39,635,008 | 308,107,085 |
 
-## B.3 Competitive Revisions/Administrative Supplements
+Earlier this year (\~April 2021), we began the process of imputing the COGENT
+genome-wide microarray GWAS data to the NHLBI's Trans-Omics for Precision
+Medicine (TOPMed) program GWAS imputation reference panel. Version r2 of the
+TOPMed reference panel, which is the first version available to the scientific
+community at large, includes 97,256 deeply sequenced and diverse reference
+samples and 308,107,085 genetic variants distributed across the 22 autosomes and
+the X chromosome. As shown in **Table 1**, the sheer density of the TOPMed panel
+substantially improves imputation accuracy and provides exponentially broader
+and deeper coverage of both common and rare variants across the genome compared
+to existing reference panels from the 1000 Genomes Project and the Haplotype
+Reference Consortium. In addition, NHLBI provides the TOPMed Imputation Server,
+which is a free next-generation genotype imputation service that runs in a
+secured cloud computing environment supported by the [NHLBI BioData Catalyst
+program](https://imputation.biodatacatalyst.nhlbi.nih.gov/#!pages/home). And an
+extensive QC is performed for all uploaded datasets.
 
-For this reporting period, is there one or more Revision/Supplement associated
-with this award for which reporting is required?
+(ref:fnote) Comparison of the makeup of publicly available GWAS imputation
+reference panels provided by Phase 3 of the 1000 Genomes Project (1000G), the
+Haplotype Reference Consortium (HRC), and the Trans-Omics for Precision Medicine
+(TOPMed) program across the 22 autosomal chromosomes.
 
-No
 
-## B.4 What opportunities for training and professional development has the project provided?
+```{=latex}
+ 
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
 
-Many many. Reproducible research. R. Rmarkdown. GitHub. Git.
+\begin{wraptable}{r}{0.5\textwidth}
+\begin{raggedleft}
+\begin{threeparttable}
+\captionsetup{justification=raggedleft,singlelinecheck=off}
+\caption{(\#tab:unnamed-chunk-4) (ref:fnote)}
+ \setlength{\tabcolsep}{0pt}
+\begin{tabularx}{0.5\textwidth}{p{0.125\textwidth} p{0.125\textwidth} p{0.125\textwidth} p{0.125\textwidth}}
 
-Support and Training User support for advanced computing at USC is primarily
-available through the CARC, which consists of a systems team, cloud/DevOps team,
-and research support team. The staff has expertise in storage system
-administration, software development, science and engineering applications,
-high-performance and parallel programming, and cloud computing solution
-development. The CARC also works with researchers who do not require HPC-level
-performance but need help developing or optimizing their code, improving their
-computing productivity by learning better programming languages, scripting, and
-so forth. The CARC offers regular onboarding sessions, office hours,
-introductory and advanced training workshops, and in-person and remote
-consultations. It also hosts vendor and national supercomputing center training
-at USC. As XSEDE Campus Champions, CARC staff can connect researchers with
-high-end computing needs to national supercomputing centers to scale their
-workflows and reach other researchers nationwide.
 
-## B.5 How have the results been disseminated to communities of interest?
+\hhline{}
+\arrayrulecolor{black}
 
-Neuropsychopharmacology
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{0pt}\parbox[b]{0.125\textwidth-0pt-4pt}{\huxtpad{0pt + 1em}\raggedright \textbf{Panel}\huxbpad{4pt}}} &
+\multicolumn{1}{p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{4pt}\parbox[b]{0.125\textwidth-4pt-4pt}{\huxtpad{0pt + 1em}\raggedleft \textbf{Samples}\huxbpad{4pt}}} &
+\multicolumn{1}{p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{4pt}\parbox[b]{0.125\textwidth-4pt-4pt}{\huxtpad{0pt + 1em}\raggedleft \textbf{Haplotypes}\huxbpad{4pt}}} &
+\multicolumn{1}{p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{4pt}\parbox[b]{0.125\textwidth-4pt-0pt}{\huxtpad{0pt + 1em}\raggedleft \textbf{Variants}\huxbpad{4pt}}} \tabularnewline[-0.5pt]
 
-## B.6 What do you plan to do during the next reporting period to accomplish the goals?
 
-# F SOMETHING
+\hhline{>{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
 
-## F.2 Actual or anticipated challenges or delays and actions or plans to resolve them
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{0pt}\parbox[b]{0.125\textwidth-0pt-4pt}{\huxtpad{4pt + 1em}\raggedright 1000G\huxbpad{4pt}}} &
+\multicolumn{1}{p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{4pt}\parbox[b]{0.125\textwidth-4pt-4pt}{\huxtpad{4pt + 1em}\raggedleft 2504\huxbpad{4pt}}} &
+\multicolumn{1}{p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{4pt}\parbox[b]{0.125\textwidth-4pt-4pt}{\huxtpad{4pt + 1em}\raggedleft 5008\huxbpad{4pt}}} &
+\multicolumn{1}{p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{4pt}\parbox[b]{0.125\textwidth-4pt-0pt}{\huxtpad{4pt + 1em}\raggedleft 49143605\huxbpad{4pt}}} \tabularnewline[-0.5pt]
 
-We are not delayed in meeting any of the aims of the project; however, we have
-been impacted by the COVID-19 pandemic. The college students we planned to
-include in a beta-test of the intervention in the spring of 2020 were all
-off-campus and involved in distance learning. Thus, a beta-test of the pregaming
-intervention, which is focused on social drinking, was not possible during the
-spring with no students on campus. Students are returning to campus in August
-2020, and we will run the beta-test then, followed soon by the launch of the
-RCT. We expect drinking contexts to be different in the fall as students return
-to campus (e.g., fewer mass gatherings, unclear if football games will be played
-with spectators); however, given that some studies are indicating alcohol use
-may be increasing for many people during the pandemic, we believe fall 2020 will
-be a good time to launch. For students, this will represent the first time they
-are getting together with their college friends in months and we expect drinking
-to be heavy, and therefore, appropriate to target, in the intervention test.
-When reporting findings, we will place the intervention and its effects in
-context so that consumers of our study will understand that the intervention was
-studied during the COVID-19 pandemic.
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{0pt}\parbox[b]{0.125\textwidth-0pt-4pt}{\huxtpad{4pt + 1em}\raggedright HRC\huxbpad{4pt}}} &
+\multicolumn{1}{p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{4pt}\parbox[b]{0.125\textwidth-4pt-4pt}{\huxtpad{4pt + 1em}\raggedleft 32470\huxbpad{4pt}}} &
+\multicolumn{1}{p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{4pt}\parbox[b]{0.125\textwidth-4pt-4pt}{\huxtpad{4pt + 1em}\raggedleft 64940\huxbpad{4pt}}} &
+\multicolumn{1}{p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{4pt}\parbox[b]{0.125\textwidth-4pt-0pt}{\huxtpad{4pt + 1em}\raggedleft 39635008\huxbpad{4pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{0pt}\parbox[b]{0.125\textwidth-0pt-4pt}{\huxtpad{4pt + 1em}\raggedright TOPMed\huxbpad{0pt}}} &
+\multicolumn{1}{p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{4pt}\parbox[b]{0.125\textwidth-4pt-4pt}{\huxtpad{4pt + 1em}\raggedleft 97256\huxbpad{0pt}}} &
+\multicolumn{1}{p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{4pt}\parbox[b]{0.125\textwidth-4pt-4pt}{\huxtpad{4pt + 1em}\raggedleft 194512\huxbpad{0pt}}} &
+\multicolumn{1}{p{0.125\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{4pt}\parbox[b]{0.125\textwidth-4pt-0pt}{\huxtpad{4pt + 1em}\raggedleft 308107085\huxbpad{0pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+\end{tabularx}
+\end{threeparttable}\par\end{raggedleft}
+
+\end{wraptable}
+ 
+```
+
+So far, we have imputed approximately 6 out of 36 COGENT cohorts to the TOPMed
+reference panel and have completed some initial post-imputation quality control
+(QC) procedures. We used the following pre- and post-imputation filters to
+select the highest quality variants:
+
+-   rsq Filter = .30
+-   imputation quality score ("INFO') score = .90
+-   minor allele frequency (MAF) = 1%
+
+Using these fairly stringent filters, we are getting approximately \~22M
+high-quality genotypes to analyze per sample. By comparison, our prior COGENT
+GWAS studies used either the 1000G or HRC panels for some of our published
+studies, and when we applied similar QC methods, we obtained \~8M SNPs per
+sample. Thus, we are confident and excited that this extra work will payoff in
+the long run and yield important new insights regarding the genetic architecture
+of human working memory abilities across the lifespan.
+
+### GenomicSEM
+
+Feature update: [GenomicSEM](https://rpubs.com/MichelNivard/640145) can now run
+High-definition likelihood (HDL) inference, which is an exciting new method to
+estimate heritability and genetic correlation with higher precision then LD
+score regression (LDSC). LDSC models the relation between the covariance of a
+SNPs Z statistics for pairs of traits and that SNPs LD score. The HDL extends
+the LDSC method by modelling the relation between covariances among Z statistics
+for pairs of traits across multiple SNPs and a full matrix of cross-SNP LD
+scores. Practically speaking, using HDL means we can analyze GWAS sumstats from
+smaller GWASs and still have enough power to estimate genetic correlations. The
+runtimes are still quite long for GenomicSEM (\~8 hours per analysis so far),
+but we are still figuring out how to optimize performance on the new Discovery
+cluster and should be able to substantially reduce those execution times.
 
 ### Reproducible research workflow
 
 The past few years have yielded much discussion and controversy in biomedical
 research circles surrounding reproducibility and replication of findings
-[Krieger2019]. This is a well known problemm in psychiatric genetics. Thus,
-prior to engaging in the core data analyses for the study, I deliberately carved
-out time in my schedule for several months while working remotely to learn more
+[Krieger2019]. This is a well known problem in psychiatric genetics. Thus, prior
+to engaging in the core data analyses for the study, I deliberately carved out
+time in my schedule for several months while working remotely to learn more
 about this issue and made a concerted effort to develop a consistent analytic
 workflow. I focused mostly on the open-source tools provided by the R
-statistical software package and specifcally learned how to work wiht and use
+statistical software package and specifically learned how to work with and use
 the R-based "Tidyverse" ecosystem [ref], which is a set of tools that supports
 an efficient project management workflow for statisticians and data scientists
 who perform large-scale reproducible research within team science environments.
 The R Tidyverse is one of the leading software systems in the growing ecosystem
 of reproducibility-facilitating software for data science. I have designed my
-labs reinvented analtyical strategy for this project as well as all future
+labs reinvented analytical strategy for this project as well as all future
 projects to work in concert with RStudio, an interactive R integrated
 development environment [9], and R Markdown (.Rmd), a file structure
 accommodating text, code and code output [10]. Fully integrated with RStudio, R
 Markdown allows us to interleave statistical programming code with formatted
 annotations, enabling its users to write highly technical documents, perform
-cutting-edge statistical analyses with interaractive data visualzations, apply
-version control via Git and GitHub, publish our methods in publicaly available
-open-scienece frameworks and repositories, share our code, and generate
+cutting-edge statistical analyses with interactive data visualizations, apply
+version control via Git and GitHub, publish our methods in publicly available
+open-science frameworks and repositories, share our code, and generate
 easy-to-use websites were all of our methods can be easily shared and reviewed
-by any qualified and/or interested researcerh. We have a website for the current
+by any qualified and/or interested researcher. We have a website for the current
 project at [gwm.flow](https://brainworkup.github.io/gwm.flow).
-
-Related, For the past two months, I have been training on the use of software
-containers and singularity. Singularity is an open-source application for
-creating and running software containers, designed primarily for
-high-performance computing on shared Linux-based computing clusters like CARC
-systems.Software containers are isolated, secure, stable, portable, and
-reproducible software environments rapidly being embraced by the research
-community in an effort to improve research reproducibility. Containers (e.g.,
-Docker, Singularity) packages main applications and all dependencies needed for
-an analysis, provide OS-level virtualization, and provide a custom user space
-that's portable and usable by others almost seamlessly. This ensures the same
-software stack is used among a research group, allows the same software stack
-across Linux systems (e.g., any HPC center), and one can run the same workflows
-across Linux systems by embedding runscripts in container images. A container
-image is a single executable file that defines the software environment for a
-container and also runs the container. A single container image can be used to
-run multiple instances of the same container simultaneously for different jobs.
-
-Singularity containers provide a custom user space and enable isolated, secure,
-stable, portable, and reproducible software environments on Linux systems. A
-Singularity container bundles a primary application and all of its dependencies
-into a single image file, which can also include data, scripts, and other files
-if desired. In addition, Singularity containers have direct access to the Linux
-kernel on the host system (e.g., Discovery or Endeavour compute nodes), so there
-is no substantial performance penalty when using a container compared to using
-natively installed software on the host system.
